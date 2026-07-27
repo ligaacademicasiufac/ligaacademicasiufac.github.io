@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import AreasNetwork from '../../components/AreasNetwork.astro';
+import JoinSection from '../../components/JoinSection.astro';
+import { areas } from '../../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title="Áreas de estudo">
+  <section class="page-hero section">
+    <div class="container">
+      <p class="eyebrow">Formação e projetos</p>
+      <h1 class="display">Três áreas estratégicas.</h1>
+      <p class="lead">
+        As trilhas orientam estudos, projetos e atividades, mantendo integração entre software, dados e infraestrutura.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--compact">
+    <div class="container">
+      <AreasNetwork />
+    </div>
+  </section>
+
+  <section class="section section--compact">
+    <div class="container">
+      <SectionHeading eyebrow="Aprofundamento" title="Escolha uma trilha para explorar." outline="Conhecimento" />
+      <div class="area-list">
+        {areas.map((area) => (
+          <a class="area-row panel" href={`${base}/areas/${area.slug}/`} data-accent={area.accent} data-reveal>
+            <span>{area.index}</span>
+            <div>
+              <h2>{area.title}</h2>
+              <p>{area.description}</p>
+            </div>
+            <b>↗</b>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <JoinSection />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: 10rem;
+  }
+
+  .area-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .area-row {
+    --accent: var(--violet-500);
+    display: grid;
+    grid-template-columns: 4rem 1fr auto;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.4rem;
+    transition: border-color 180ms ease, transform 180ms ease;
+  }
+
+  .area-row:hover {
+    border-color: var(--accent);
+    transform: translateX(8px);
+  }
+
+  .area-row > span {
+    color: var(--accent);
+    font-family: var(--display);
+    font-size: 1.5rem;
+  }
+
+  .area-row h2 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 3vw, 2.7rem);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .area-row p {
+    margin: 0.6rem 0 0;
+    color: var(--muted);
+  }
+
+  .area-row b {
+    color: var(--accent);
+    font-size: 1.8rem;
+  }
+</style>

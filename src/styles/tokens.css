@@ -1,0 +1,25 @@
+:root {
+  --ink-1000: #010516;
+  --ink-950: #02091e;
+  --ink-900: #06142f;
+  --ink-850: #0a1d3d;
+  --ink-800: #10274a;
+  --blue-600: #0669b2;
+  --blue-500: #0a7ed0;
+  --cyan-400: #45d6ff;
+  --violet-600: #75409c;
+  --violet-500: #9451b8;
+  --violet-400: #b16bd1;
+  --white: #f7f8fd;
+  --muted: #aab4ca;
+  --line: rgba(154, 185, 224, 0.16);
+  --panel: rgba(11, 27, 58, 0.68);
+  --panel-strong: rgba(7, 18, 43, 0.92);
+  --shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 2rem;
+  --container: min(1180px, calc(100% - 2rem));
+  --display: 'Archivo Black', Impact, sans-serif;
+  --body: 'Space Grotesk', system-ui, sans-serif;
+}

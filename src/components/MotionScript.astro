@@ -1,0 +1,127 @@
+<script>
+  import gsap from 'gsap';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const glow = document.querySelector('.cursor-glow');
+  if (glow && !reduceMotion) {
+    window.addEventListener('pointermove', (event) => {
+      gsap.to(glow, {
+        x: event.clientX,
+        y: event.clientY,
+        duration: 0.45,
+        ease: 'power3.out'
+      });
+    }, { passive: true });
+  }
+
+  if (!reduceMotion) {
+    const hero = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    hero
+      .from('[data-hero-kicker]', { y: 22, opacity: 0, duration: 0.6 })
+      .from('[data-hero-line]', { yPercent: 115, opacity: 0, stagger: 0.1, duration: 0.8 }, '-=0.25')
+      .from('[data-hero-copy]', { y: 24, opacity: 0, duration: 0.65 }, '-=0.4')
+      .from('[data-hero-actions]', { y: 18, opacity: 0, duration: 0.55 }, '-=0.35')
+      .from('[data-hero-horse]', { xPercent: 18, rotate: 5, scale: 0.88, opacity: 0, duration: 1.1 }, '-=0.9')
+      .from('[data-hero-mark]', { scale: 0.75, rotate: -8, opacity: 0, duration: 0.8 }, '-=0.8');
+
+    gsap.utils.toArray('[data-reveal]').forEach((element) => {
+      const direction = element.getAttribute('data-reveal');
+      const from = direction === 'left'
+        ? { x: -42, y: 0 }
+        : direction === 'right'
+          ? { x: 42, y: 0 }
+          : { x: 0, y: 36 };
+
+      gsap.fromTo(
+        element,
+        { ...from, opacity: 0 },
+        {
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 0.85,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 86%',
+            once: true
+          }
+        }
+      );
+    });
+
+    gsap.utils.toArray('[data-parallax]').forEach((element) => {
+      const speed = Number(element.getAttribute('data-parallax') || 12);
+      gsap.to(element, {
+        yPercent: speed,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    });
+
+    gsap.utils.toArray('[data-counter]').forEach((element) => {
+      const target = Number(element.getAttribute('data-counter') || 0);
+      const state = { value: 0 };
+
+      gsap.to(state, {
+        value: target,
+        duration: 1.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 88%',
+          once: true
+        },
+        onUpdate: () => {
+          element.textContent = Math.round(state.value).toLocaleString('pt-BR');
+        }
+      });
+    });
+
+    gsap.utils.toArray('[data-magnetic]').forEach((element) => {
+      const strength = 0.18;
+      element.addEventListener('pointermove', (event) => {
+        const rect = element.getBoundingClientRect();
+        const x = event.clientX - (rect.left + rect.width / 2);
+        const y = event.clientY - (rect.top + rect.height / 2);
+        gsap.to(element, { x: x * strength, y: y * strength, duration: 0.3, ease: 'power2.out' });
+      });
+
+      element.addEventListener('pointerleave', () => {
+        gsap.to(element, { x: 0, y: 0, duration: 0.55, ease: 'elastic.out(1, 0.45)' });
+      });
+    });
+
+    const areaLines = document.querySelectorAll('[data-area-line]');
+    areaLines.forEach((line) => {
+      const length = line.getTotalLength?.();
+      if (!length) return;
+      line.style.strokeDasharray = `${length}`;
+      line.style.strokeDashoffset = `${length}`;
+      gsap.to(line, {
+        strokeDashoffset: 0,
+        duration: 1.2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '[data-area-network]',
+          start: 'top 72%',
+          once: true
+        }
+      });
+    });
+  } else {
+    document.querySelectorAll('[data-reveal]').forEach((element) => {
+      element.style.opacity = '1';
+      element.style.transform = 'none';
+    });
+  }
+</script>

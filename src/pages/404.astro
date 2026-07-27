@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title="Página não encontrada">
+  <section class="not-found">
+    <div class="container">
+      <p class="eyebrow">Erro 404</p>
+      <h1 class="display">Essa jogada não existe.</h1>
+      <p class="lead">A página pode ter sido movida ou o endereço está incorreto.</p>
+      <a class="button" href={`${base}/`}>Voltar ao início →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: 8rem 0;
+    background: radial-gradient(circle at 70% 45%, rgba(148,81,184,0.24), transparent 30rem);
+  }
+
+  .not-found .button {
+    margin-top: 2rem;
+  }
+</style>

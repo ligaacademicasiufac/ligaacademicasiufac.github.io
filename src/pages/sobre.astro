@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import AchievementStats from '../components/AchievementStats.astro';
+import JoinSection from '../components/JoinSection.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title="Sobre a LASI">
+  <section class="page-hero section">
+    <div class="container grid-2">
+      <div data-reveal="left">
+        <p class="eyebrow">Conheça a LASI</p>
+        <h1 class="display">Estratégia, tecnologia e comunidade.</h1>
+        <p class="lead">
+          A Liga Acadêmica de Sistemas de Informação promove o estudo, a pesquisa e o desenvolvimento tecnológico por meio de três áreas estratégicas da computação.
+        </p>
+      </div>
+      <div class="about-logo panel" data-reveal="right">
+        <img src={`${base}/brand/logo-lasi.png`} alt="Logo da Liga Acadêmica de Sistemas de Informação" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--compact">
+    <div class="container">
+      <SectionHeading eyebrow="Propósito" title="Conhecimento que se transforma em prática." outline="Objetivo" />
+      <div class="purpose-grid">
+        <article class="panel purpose-card" data-reveal>
+          <span>01</span>
+          <h2>Ensino</h2>
+          <p>Trilhas de estudo, oficinas, mentorias, palestras e compartilhamento de conhecimento.</p>
+        </article>
+        <article class="panel purpose-card" data-reveal>
+          <span>02</span>
+          <h2>Pesquisa</h2>
+          <p>Investigação, experimentação e desenvolvimento de soluções com rigor acadêmico.</p>
+        </article>
+        <article class="panel purpose-card" data-reveal>
+          <span>03</span>
+          <h2>Extensão</h2>
+          <p>Projetos, eventos e iniciativas que conectam universidade, comunidade e impacto social.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--compact">
+    <div class="container">
+      <SectionHeading eyebrow="Estrutura" title="Uma liga construída por pessoas." outline="Comunidade" />
+      <AchievementStats />
+    </div>
+  </section>
+
+  <JoinSection />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: 10rem;
+  }
+
+  .about-logo {
+    display: grid;
+    min-height: 32rem;
+    place-items: center;
+    padding: 2rem;
+    background:
+      radial-gradient(circle, rgba(148,81,184,0.2), transparent 60%),
+      rgba(255,255,255,0.03);
+  }
+
+  .about-logo img {
+    width: min(28rem, 85%);
+    filter: drop-shadow(0 30px 80px rgba(0,0,0,0.5));
+  }
+
+  .purpose-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .purpose-card {
+    min-height: 18rem;
+    padding: 1.5rem;
+  }
+
+  .purpose-card > span {
+    color: var(--violet-400);
+    font-weight: 800;
+  }
+
+  .purpose-card h2 {
+    margin: 4rem 0 0.75rem;
+    font-family: var(--display);
+    font-size: 2.2rem;
+    text-transform: uppercase;
+  }
+
+  .purpose-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 760px) {
+    .purpose-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

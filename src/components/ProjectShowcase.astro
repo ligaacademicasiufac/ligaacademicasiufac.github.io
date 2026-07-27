@@ -1,0 +1,154 @@
+---
+interface Project {
+  id: string;
+  data: {
+    title: string;
+    eyebrow: string;
+    summary: string;
+    year: number;
+    area: string;
+    status: string;
+    cover: string;
+    tags: string[];
+  };
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="project-grid">
+  {projects.map((project, index) => (
+    <article class="project-card panel" data-reveal data-project-card>
+      <div class="project-index">{String(index + 1).padStart(2, '0')}</div>
+      <div class="project-media">
+        <img src={`${base}${project.data.cover}`} alt="" loading="lazy" />
+      </div>
+      <div class="project-content">
+        <p class="eyebrow">{project.data.eyebrow} · {project.data.year}</p>
+        <h3>{project.data.title}</h3>
+        <p>{project.data.summary}</p>
+        <ul class="tag-list">
+          {project.data.tags.slice(0, 4).map((tag) => <li class="tag">{tag}</li>)}
+        </ul>
+        <a href={`${base}/projetos/${project.id}/`}>Abrir projeto <span>↗</span></a>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .project-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .project-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.78fr) 1.22fr;
+    min-height: 25rem;
+    overflow: hidden;
+  }
+
+  .project-card:nth-child(even) {
+    grid-template-columns: 1.22fr minmax(16rem, 0.78fr);
+  }
+
+  .project-card:nth-child(even) .project-media {
+    order: 2;
+  }
+
+  .project-media {
+    position: relative;
+    min-height: 20rem;
+    overflow: hidden;
+    background:
+      radial-gradient(circle, rgba(148,81,184,0.3), transparent 65%),
+      var(--ink-900);
+  }
+
+  .project-media::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background: linear-gradient(90deg, transparent, rgba(4,14,35,0.45));
+  }
+
+  .project-card:nth-child(even) .project-media::after {
+    background: linear-gradient(-90deg, transparent, rgba(4,14,35,0.45));
+  }
+
+  .project-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 600ms cubic-bezier(.2,.7,.2,1), filter 600ms ease;
+  }
+
+  .project-card:hover .project-media img {
+    transform: scale(1.055);
+    filter: saturate(1.12);
+  }
+
+  .project-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .project-content h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(2rem, 5vw, 4.2rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+
+  .project-content > p:not(.eyebrow) {
+    max-width: 58ch;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .project-content > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 1.8rem;
+    color: var(--violet-400);
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .project-index {
+    position: absolute;
+    z-index: 4;
+    top: 1rem;
+    right: 1rem;
+    color: rgba(255,255,255,0.18);
+    font-family: var(--display);
+    font-size: 3rem;
+  }
+
+  @media (max-width: 760px) {
+    .project-card,
+    .project-card:nth-child(even) {
+      grid-template-columns: 1fr;
+    }
+
+    .project-card:nth-child(even) .project-media {
+      order: 0;
+    }
+
+    .project-media {
+      min-height: 18rem;
+    }
+  }
+</style>

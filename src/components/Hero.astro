@@ -1,0 +1,295 @@
+---
+import { site } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="hero">
+  <div class="hero-noise" aria-hidden="true"></div>
+  <div class="hero-orbit hero-orbit--one" aria-hidden="true"></div>
+  <div class="hero-orbit hero-orbit--two" aria-hidden="true"></div>
+
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow" data-hero-kicker>Ensino · Pesquisa · Extensão · Inovação</p>
+      <h1 class="hero-title" aria-label="Tecnologia que move a Amazônia">
+        <span class="hero-line"><span data-hero-line>Tecnologia que</span></span>
+        <span class="hero-line"><span data-hero-line>move a</span></span>
+        <span class="hero-line hero-line--accent"><span data-hero-line>Amazônia.</span></span>
+      </h1>
+      <p class="hero-description" data-hero-copy>
+        A {site.fullName} conecta estudantes para aprender, pesquisar, construir projetos e transformar conhecimento em impacto.
+      </p>
+      <div class="button-row" data-hero-actions>
+        <a class="button" href={`${base}/participe/`} data-magnetic>Faça parte da LASI <span>↗</span></a>
+        <a class="button button--ghost" href={`${base}/projetos/`} data-magnetic>Conheça os projetos <span>→</span></a>
+      </div>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <span class="hero-word display-outline">LASI</span>
+      <div class="hero-glow" data-pulse></div>
+      <img
+        class="hero-mark"
+        src={`${base}/brand/mark-lasi.png`}
+        alt=""
+        width="520"
+        height="520"
+        data-hero-mark
+        data-parallax="-8"
+      />
+      <img
+        class="hero-horse"
+        src={`${base}/brand/horse.png`}
+        alt=""
+        width="510"
+        height="820"
+        data-hero-horse
+        data-float
+      />
+      <div class="hero-data hero-data--top">01 — Estratégia</div>
+      <div class="hero-data hero-data--bottom">Tecnologia · Comunidade · Impacto</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true">
+    <span>Role para explorar</span>
+    <i></i>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: 7.5rem 0 5rem;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background:
+      linear-gradient(90deg, rgba(1, 5, 22, 0.9) 0%, rgba(1, 5, 22, 0.42) 50%, rgba(1, 5, 22, 0.08) 100%),
+      radial-gradient(circle at 75% 45%, rgba(148, 81, 184, 0.22), transparent 28rem);
+    pointer-events: none;
+  }
+
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.18;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+    mix-blend-mode: soft-light;
+  }
+
+  .hero-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 3;
+  }
+
+  .hero-title {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(3.4rem, 8vw, 7.9rem);
+    line-height: 0.83;
+    letter-spacing: -0.07em;
+    text-transform: uppercase;
+  }
+
+  .hero-line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .hero-line > span {
+    display: block;
+  }
+
+  .hero-line--accent {
+    color: var(--violet-400);
+    text-shadow: 0 0 42px rgba(148, 81, 184, 0.3);
+  }
+
+  .hero-description {
+    max-width: 55ch;
+    margin: 1.7rem 0 0;
+    color: #c5d0e5;
+    font-size: clamp(1rem, 1.5vw, 1.18rem);
+    line-height: 1.7;
+  }
+
+  .hero-art {
+    position: relative;
+    min-height: 41rem;
+  }
+
+  .hero-word {
+    position: absolute;
+    top: 15%;
+    left: -10%;
+    font-family: var(--display);
+    font-size: clamp(7rem, 17vw, 15rem);
+    line-height: 0.8;
+    letter-spacing: -0.08em;
+    transform: rotate(90deg);
+    opacity: 0.48;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: min(34rem, 90%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(126, 67, 180, 0.55), rgba(8, 93, 163, 0.25) 42%, transparent 70%);
+    filter: blur(10px);
+    transform: translateX(-50%);
+  }
+
+  .hero-mark {
+    position: absolute;
+    right: -7%;
+    bottom: 6%;
+    width: 74%;
+    opacity: 0.12;
+    filter: saturate(0) brightness(1.8);
+  }
+
+  .hero-horse {
+    position: absolute;
+    z-index: 2;
+    right: 4%;
+    bottom: 0;
+    width: min(24rem, 74%);
+    filter:
+      drop-shadow(0 30px 60px rgba(0,0,0,0.55))
+      drop-shadow(0 0 34px rgba(148,81,184,0.42));
+  }
+
+  .hero-data {
+    position: absolute;
+    z-index: 4;
+    color: rgba(255,255,255,0.62);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .hero-data--top {
+    top: 12%;
+    right: 3%;
+  }
+
+  .hero-data--bottom {
+    right: 1%;
+    bottom: 1%;
+  }
+
+  .hero-orbit {
+    position: absolute;
+    border: 1px solid rgba(69, 214, 255, 0.11);
+    border-radius: 50%;
+  }
+
+  .hero-orbit--one {
+    top: 12%;
+    right: -12rem;
+    width: 36rem;
+    height: 36rem;
+  }
+
+  .hero-orbit--two {
+    bottom: -18rem;
+    left: -10rem;
+    width: 42rem;
+    height: 42rem;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    z-index: 3;
+    bottom: 1.4rem;
+    left: 50%;
+    display: grid;
+    justify-items: center;
+    gap: 0.65rem;
+    color: #7f8ba4;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+  }
+
+  .hero-scroll i {
+    width: 1px;
+    height: 2.4rem;
+    background: linear-gradient(var(--violet-400), transparent);
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      min-height: auto;
+      padding-top: 8.5rem;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-art {
+      min-height: 34rem;
+      margin-top: -2rem;
+    }
+
+    .hero-title {
+      font-size: clamp(3.2rem, 14vw, 6.4rem);
+    }
+
+    .hero-horse {
+      right: 10%;
+      width: min(22rem, 68vw);
+    }
+
+    .hero-mark {
+      right: 5%;
+      width: 65%;
+    }
+
+    .hero-scroll {
+      display: none;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .hero-art {
+      min-height: 28rem;
+    }
+
+    .hero-horse {
+      right: 3%;
+      width: min(19rem, 76vw);
+    }
+
+    .hero-data--top {
+      top: 8%;
+    }
+
+    .hero-data--bottom {
+      font-size: 0.58rem;
+    }
+  }
+</style>

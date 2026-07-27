@@ -1,0 +1,83 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title={project.data.title} description={project.data.summary}>
+  <article>
+    <header class="project-hero section">
+      <div class="project-cover">
+        <img src={`${base}${project.data.cover}`} alt="" />
+      </div>
+      <div class="container project-hero-content">
+        <p class="eyebrow">{project.data.eyebrow} · {project.data.year}</p>
+        <h1 class="display">{project.data.title}</h1>
+        <p class="lead">{project.data.summary}</p>
+        <ul class="tag-list">
+          {project.data.tags.map((tag) => <li class="tag">{tag}</li>)}
+        </ul>
+        <div class="button-row">
+          {project.data.externalUrl && (
+            <a class="button" href={project.data.externalUrl} target="_blank" rel="noreferrer">Ver projeto ↗</a>
+          )}
+          {project.data.repositoryUrl && (
+            <a class="button button--ghost" href={project.data.repositoryUrl} target="_blank" rel="noreferrer">Código no GitHub ↗</a>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <section class="section section--compact">
+      <div class="container prose">
+        <Content />
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-hero {
+    min-height: 82svh;
+    display: grid;
+    align-items: end;
+    padding-top: 10rem;
+    overflow: hidden;
+  }
+
+  .project-cover {
+    position: absolute;
+    inset: 0;
+  }
+
+  .project-cover::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background:
+      linear-gradient(180deg, rgba(1,5,22,0.25), rgba(1,5,22,0.88) 68%, var(--ink-1000)),
+      linear-gradient(90deg, rgba(1,5,22,0.7), transparent);
+  }
+
+  .project-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-hero-content {
+    position: relative;
+    z-index: 2;
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+import { site } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="join-section section">
+  <div class="container join-panel panel">
+    <div class="join-art" aria-hidden="true">
+      <img src={`${base}/brand/horse.png`} alt="" data-float />
+      <span class="display-outline">LASI</span>
+    </div>
+    <div class="join-copy" data-reveal>
+      <p class="eyebrow">Comunidade aberta</p>
+      <h2 class="display display--medium">A próxima ideia pode começar com você.</h2>
+      <p class="lead">
+        Receba oportunidades, participe de projetos, desenvolva novas habilidades e construa soluções com a comunidade da LASI.
+      </p>
+      <div class="button-row">
+        <a class="button" href={`${base}/links/`} data-magnetic>Entrar na comunidade <span>↗</span></a>
+        <a class="button button--ghost" href={site.instagram} target="_blank" rel="noreferrer">Acompanhar no Instagram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .join-panel {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    min-height: 34rem;
+    align-items: center;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 20% 45%, rgba(148,81,184,0.28), transparent 22rem),
+      linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+  }
+
+  .join-art {
+    position: relative;
+    align-self: stretch;
+  }
+
+  .join-art img {
+    position: absolute;
+    z-index: 2;
+    bottom: -1.5rem;
+    left: 10%;
+    width: min(22rem, 80%);
+    filter: drop-shadow(0 24px 48px rgba(0,0,0,0.45));
+  }
+
+  .join-art span {
+    position: absolute;
+    top: 15%;
+    left: 2%;
+    font-family: var(--display);
+    font-size: clamp(7rem, 18vw, 15rem);
+    line-height: 0.8;
+    transform: rotate(-90deg);
+  }
+
+  .join-copy {
+    position: relative;
+    z-index: 3;
+    padding: clamp(2rem, 6vw, 5rem);
+  }
+
+  @media (max-width: 760px) {
+    .join-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .join-art {
+      min-height: 20rem;
+    }
+
+    .join-art img {
+      left: 50%;
+      width: 15rem;
+      transform: translateX(-50%);
+    }
+  }
+</style>

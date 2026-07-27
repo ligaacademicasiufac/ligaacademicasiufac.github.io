@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const linkItems = [
+  { label: 'Entrar no grupo de avisos', href: '#whatsapp-qr', icon: '↗', primary: true },
+  { label: 'Conhecer a LASI', href: `${base}/sobre/`, icon: '→' },
+  { label: 'Projetos e iniciativas', href: `${base}/projetos/`, icon: '→' },
+  { label: 'Eventos e oportunidades', href: `${base}/eventos/`, icon: '→' },
+  { label: 'Áreas de estudo', href: `${base}/areas/`, icon: '→' },
+  { label: 'Diretoria 2026', href: `${base}/diretoria/`, icon: '→' },
+  { label: 'GitHub', href: site.github, icon: '↗', external: true },
+  { label: 'Instagram', href: site.instagram, icon: '↗', external: true }
+];
+---
+
+<BaseLayout title="Links da LASI" hideHeader={true}>
+  <section class="links-page">
+    <div class="links-shell">
+      <header class="links-header" data-reveal>
+        <img src={`${base}/brand/logo-lasi.png`} alt="Logo da LASI" />
+        <p class="eyebrow">Liga Acadêmica de Sistemas de Informação</p>
+        <h1>LASI</h1>
+        <span>{site.tagline}</span>
+      </header>
+
+      <nav class="links-list" aria-label="Links principais">
+        {linkItems.map((item) => (
+          <a
+            class:list={['link-card panel', { 'link-card--primary': item.primary }]}
+            href={item.href}
+            target={item.external ? '_blank' : undefined}
+            rel={item.external ? 'noreferrer' : undefined}
+            data-reveal
+          >
+            <span>{item.label}</span>
+            <b>{item.icon}</b>
+          </a>
+        ))}
+      </nav>
+
+      <section id="whatsapp-qr" class="qr-panel panel" data-reveal>
+        <p class="eyebrow">Grupo de avisos</p>
+        <h2>Escaneie e entre na comunidade.</h2>
+        <img src={`${base}/social/whatsapp-qr.png`} alt="QR Code do grupo de avisos da LASI no WhatsApp" />
+        <small>
+          Substitua o link direto do WhatsApp no arquivo <code>src/data/site.ts</code> quando ele estiver disponível.
+        </small>
+      </section>
+
+      <footer class="links-footer">
+        <a href={`${base}/`}>Abrir site institucional →</a>
+        <span>IA e Dados · Engenharia de Software · Infraestrutura e Redes</span>
+      </footer>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .links-page {
+    min-height: 100svh;
+    padding: 3rem 1rem;
+    background:
+      radial-gradient(circle at 50% 12%, rgba(148,81,184,0.24), transparent 22rem),
+      linear-gradient(160deg, var(--ink-1000), var(--ink-900));
+  }
+
+  .links-shell {
+    width: min(42rem, 100%);
+    margin-inline: auto;
+  }
+
+  .links-header {
+    text-align: center;
+  }
+
+  .links-header img {
+    width: 7.5rem;
+    height: 7.5rem;
+    margin-inline: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 55px rgba(0,0,0,0.45));
+  }
+
+  .links-header .eyebrow {
+    justify-content: center;
+    margin-top: 1.2rem;
+  }
+
+  .links-header h1 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(4.8rem, 18vw, 8rem);
+    line-height: 0.8;
+  }
+
+  .links-header > span {
+    display: block;
+    margin-top: 1rem;
+    color: var(--muted);
+  }
+
+  .links-list {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 2.2rem;
+  }
+
+  .link-card {
+    display: flex;
+    min-height: 4rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+    font-weight: 800;
+    transition: transform 180ms ease, border-color 180ms ease;
+  }
+
+  .link-card:hover {
+    border-color: rgba(177,107,209,0.58);
+    transform: translateY(-3px);
+  }
+
+  .link-card--primary {
+    border-color: rgba(177,107,209,0.55);
+    background: linear-gradient(135deg, rgba(148,81,184,0.55), rgba(8,93,163,0.45));
+  }
+
+  .link-card b {
+    color: var(--violet-400);
+  }
+
+  .link-card--primary b {
+    color: var(--white);
+  }
+
+  .qr-panel {
+    margin-top: 1.6rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .qr-panel .eyebrow {
+    justify-content: center;
+  }
+
+  .qr-panel h2 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .qr-panel img {
+    width: min(22rem, 100%);
+    margin: 1.4rem auto;
+    border-radius: 1rem;
+    background: white;
+  }
+
+  .qr-panel small {
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .qr-panel code {
+    color: var(--violet-400);
+  }
+
+  .links-footer {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+
+  .links-footer a {
+    color: var(--violet-400);
+    font-weight: 800;
+  }
+</style>

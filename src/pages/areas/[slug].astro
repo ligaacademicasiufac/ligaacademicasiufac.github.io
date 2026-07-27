@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import JoinSection from '../../components/JoinSection.astro';
+import { areas } from '../../data/site';
+
+export function getStaticPaths() {
+  return areas.map((area) => ({
+    params: { slug: area.slug },
+    props: { area }
+  }));
+}
+
+const { area } = Astro.props;
+---
+
+<BaseLayout title={area.title} description={area.longDescription}>
+  <section class="area-hero section" data-accent={area.accent}>
+    <div class="container">
+      <p class="eyebrow">Área {area.index}</p>
+      <h1 class="display">{area.title}</h1>
+      <p class="lead">{area.longDescription}</p>
+      <ul class="tag-list">
+        {area.topics.map((topic) => <li class="tag">{topic}</li>)}
+      </ul>
+    </div>
+    <span class="area-number display-outline" aria-hidden="true">{area.index}</span>
+  </section>
+
+  <section class="section section--compact">
+    <div class="container grid-2">
+      <div data-reveal="left">
+        <p class="eyebrow">O que estudamos</p>
+        <h2 class="display display--medium">Da base teórica à solução aplicada.</h2>
+      </div>
+      <div class="topic-stack" data-reveal="right">
+        {area.topics.map((topic, index) => (
+          <article class="panel">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <strong>{topic}</strong>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <JoinSection />
+</BaseLayout>
+
+<style>
+  .area-hero {
+    --accent: var(--violet-500);
+    min-height: 78svh;
+    display: grid;
+    align-items: center;
+    padding-top: 10rem;
+    overflow: hidden;
+    background: radial-gradient(circle at 80% 45%, color-mix(in srgb, var(--accent), transparent 72%), transparent 30rem);
+  }
+
+  .area-hero .display {
+    max-width: 11ch;
+  }
+
+  .area-number {
+    position: absolute;
+    right: -2vw;
+    bottom: -8vw;
+    font-family: var(--display);
+    font-size: clamp(15rem, 42vw, 38rem);
+    line-height: 0.7;
+  }
+
+  .topic-stack {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .topic-stack article {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    align-items: center;
+    padding: 1.1rem;
+  }
+
+  .topic-stack span {
+    color: var(--accent);
+    font-weight: 800;
+  }
+
+  .topic-stack strong {
+    font-size: 1.1rem;
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import DirectorsGrid from '../components/DirectorsGrid.astro';
+import JoinSection from '../components/JoinSection.astro';
+---
+
+<BaseLayout title="Diretoria 2026">
+  <section class="page-hero section">
+    <div class="container">
+      <p class="eyebrow">Gestão 2026</p>
+      <h1 class="display">Pessoas que organizam o movimento.</h1>
+      <p class="lead">
+        A diretoria coordena atividades de ensino, pesquisa, extensão, comunicação e gestão da Liga.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--compact">
+    <div class="container">
+      <SectionHeading eyebrow="Equipe" title="Diretoria LASI 2026." outline="Gestão" />
+      <DirectorsGrid />
+    </div>
+  </section>
+
+  <JoinSection />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: 10rem;
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import AreasNetwork from '../components/AreasNetwork.astro';
+import ProjectShowcase from '../components/ProjectShowcase.astro';
+import EventsTimeline from '../components/EventsTimeline.astro';
+import AchievementStats from '../components/AchievementStats.astro';
+import DirectorsGrid from '../components/DirectorsGrid.astro';
+import JoinSection from '../components/JoinSection.astro';
+
+const projects = (await getCollection('projects'))
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section class="section manifesto">
+    <div class="container grid-2">
+      <div data-reveal="left">
+        <p class="eyebrow">Manifesto</p>
+        <h2 class="display display--medium">
+          Não somos apenas uma <span class="kicker">liga acadêmica.</span>
+        </h2>
+      </div>
+      <div data-reveal="right">
+        <p class="lead">
+          Somos um espaço de formação, colaboração e desenvolvimento tecnológico. Conectamos estudantes interessados em construir soluções, participar de projetos e transformar conhecimento em impacto.
+        </p>
+        <div class="manifesto-words">
+          <span>Formação</span>
+          <span>Colaboração</span>
+          <span>Impacto</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section areas-section">
+    <div class="container">
+      <SectionHeading eyebrow="Trilhas de formação" title="Três áreas. Um núcleo." outline="Áreas de estudo" />
+      <AreasNetwork />
+    </div>
+  </section>
+
+  <section class="section projects-section">
+    <div class="container">
+      <SectionHeading eyebrow="Portfólio" title="Ideias que saem do tabuleiro." outline="Projetos" />
+      <ProjectShowcase projects={projects} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Agenda e comunidade" title="Aprenda. Construa. Compita." outline="Movimento" />
+      <EventsTimeline />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Resultados" title="Impacto em números." outline="Conquistas" />
+      <AchievementStats />
+    </div>
+  </section>
+
+  <section class="section directors-section">
+    <div class="container">
+      <SectionHeading eyebrow="Gestão 2026" title="Quem move a LASI." outline="Diretoria" />
+      <DirectorsGrid />
+    </div>
+  </section>
+
+  <JoinSection />
+</BaseLayout>
+
+<style>
+  .manifesto {
+    overflow: hidden;
+  }
+
+  .manifesto::before {
+    position: absolute;
+    top: 50%;
+    right: -12rem;
+    width: 34rem;
+    aspect-ratio: 1;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    content: '';
+    transform: translateY(-50%);
+  }
+
+  .manifesto-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 2rem;
+  }
+
+  .manifesto-words span {
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--white);
+    background: rgba(255,255,255,0.035);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .areas-section {
+    background:
+      linear-gradient(rgba(255,255,255,0.018), rgba(255,255,255,0.018)),
+      radial-gradient(circle at 50% 50%, rgba(148,81,184,0.1), transparent 35rem);
+  }
+
+  .projects-section {
+    overflow: hidden;
+  }
+
+  .directors-section {
+    background: linear-gradient(180deg, transparent, rgba(10,31,65,0.28), transparent);
+  }
+</style>

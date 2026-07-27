@@ -1,0 +1,116 @@
+---
+import { directors } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="directors-grid">
+  {directors.map((director, index) => (
+    <article class="director-card panel" data-reveal data-parallax={index % 2 === 0 ? -3 : 3}>
+      <span class="director-index">{String(index + 1).padStart(2, '0')}</span>
+      <div class="director-photo">
+        <img src={`${base}${director.image}`} alt={`Retrato de ${director.name}`} loading="lazy" />
+      </div>
+      <div class="director-copy">
+        <p>{director.role}</p>
+        <h3>{director.name}</h3>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .directors-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+  }
+
+  .director-card {
+    position: relative;
+    grid-column: span 4;
+    min-height: 31rem;
+    overflow: hidden;
+  }
+
+  .director-card:nth-child(1),
+  .director-card:nth-child(2) {
+    grid-column: span 6;
+  }
+
+  .director-photo {
+    position: absolute;
+    inset: 0;
+  }
+
+  .director-photo::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background:
+      linear-gradient(180deg, transparent 25%, rgba(4,14,35,0.18) 52%, rgba(2,9,30,0.98) 92%),
+      linear-gradient(90deg, rgba(10,126,208,0.1), rgba(148,81,184,0.12));
+  }
+
+  .director-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 700ms cubic-bezier(.2,.75,.2,1), filter 450ms ease;
+  }
+
+  .director-card:hover .director-photo img {
+    transform: scale(1.045) translateY(-5px);
+    filter: contrast(1.05) saturate(1.12);
+  }
+
+  .director-copy {
+    position: absolute;
+    z-index: 2;
+    right: 1.3rem;
+    bottom: 1.3rem;
+    left: 1.3rem;
+  }
+
+  .director-copy p {
+    margin: 0 0 0.45rem;
+    color: var(--violet-400);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .director-copy h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(1.65rem, 3vw, 3rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .director-index {
+    position: absolute;
+    z-index: 3;
+    top: 1rem;
+    right: 1rem;
+    color: rgba(255,255,255,0.42);
+    font-weight: 800;
+  }
+
+  @media (max-width: 900px) {
+    .director-card,
+    .director-card:nth-child(1),
+    .director-card:nth-child(2) {
+      grid-column: span 6;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .director-card,
+    .director-card:nth-child(1),
+    .director-card:nth-child(2) {
+      grid-column: span 12;
+      min-height: 29rem;
+    }
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import { events } from '../data/site';
+---
+
+<div class="timeline">
+  {events.map((event, index) => (
+    <article class="timeline-item" data-reveal>
+      <div class="timeline-marker">
+        <span>{String(index + 1).padStart(2, '0')}</span>
+      </div>
+      <div class="timeline-card panel">
+        <div class="timeline-meta">
+          <span>{event.date}</span>
+          <span>{event.type}</span>
+          <span>{event.status}</span>
+        </div>
+        <h3>{event.title}</h3>
+        <p>{event.description}</p>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .timeline {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .timeline::before {
+    position: absolute;
+    top: 1.6rem;
+    bottom: 1.6rem;
+    left: 1.75rem;
+    width: 1px;
+    content: '';
+    background: linear-gradient(var(--violet-400), rgba(69,214,255,0.4), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1rem;
+  }
+
+  .timeline-marker {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    width: 3.5rem;
+    height: 3.5rem;
+    place-items: center;
+    border: 1px solid rgba(177,107,209,0.5);
+    border-radius: 50%;
+    background: var(--ink-900);
+    box-shadow: 0 0 28px rgba(148,81,184,0.2);
+  }
+
+  .timeline-marker span {
+    color: var(--violet-400);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .timeline-card {
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .timeline-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    color: var(--violet-400);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .timeline-meta span:not(:last-child)::after {
+    margin-left: 0.6rem;
+    content: '·';
+    color: #66738f;
+  }
+
+  .timeline-card h3 {
+    margin: 0.9rem 0 0.5rem;
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 3vw, 2.7rem);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .timeline-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+</style>

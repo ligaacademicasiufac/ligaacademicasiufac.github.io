@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ProjectShowcase from '../../components/ProjectShowcase.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Projetos">
+  <section class="page-hero section">
+    <div class="container">
+      <p class="eyebrow">Portfólio LASI</p>
+      <h1 class="display">Ideias que se tornam soluções.</h1>
+      <p class="lead">
+        Projetos, competições e iniciativas que conectam aprendizado, pesquisa e impacto.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--compact">
+    <div class="container">
+      <SectionHeading eyebrow="Projetos e iniciativas" title="Construído em comunidade." outline="Portfólio" />
+      <ProjectShowcase projects={projects} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: 10rem;
+  }
+</style>

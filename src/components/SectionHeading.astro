@@ -1,0 +1,55 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  outline?: string;
+  align?: 'left' | 'center';
+}
+
+const { eyebrow, title, outline, align = 'left' } = Astro.props;
+---
+
+<header class:list={['section-heading', { 'section-heading--center': align === 'center' }]} data-reveal>
+  <p class="eyebrow">{eyebrow}</p>
+  <h2 class="display display--medium">{title}</h2>
+  {outline && <span class="section-outline display-outline" aria-hidden="true">{outline}</span>}
+</header>
+
+<style>
+  .section-heading {
+    position: relative;
+    z-index: 1;
+    margin-bottom: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .section-heading--center {
+    text-align: center;
+  }
+
+  .section-heading--center .display {
+    margin-inline: auto;
+  }
+
+  .section-heading--center .eyebrow {
+    justify-content: center;
+  }
+
+  .section-outline {
+    position: absolute;
+    z-index: -1;
+    top: 45%;
+    left: 0;
+    font-family: var(--display);
+    font-size: clamp(3.4rem, 10vw, 9rem);
+    line-height: 0.8;
+    letter-spacing: -0.07em;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    opacity: 0.72;
+  }
+
+  .section-heading--center .section-outline {
+    right: 0;
+  }
+</style>

@@ -12,7 +12,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <div class="area-core" data-pulse>
     <img src={`${base}/brand/mark-lasi.png`} alt="" width="160" height="160" />
-    <span>Núcleo LASI</span>
   </div>
 
   {areas.map((area, index) => (
@@ -74,13 +73,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     width: 6rem;
     height: 6rem;
     object-fit: contain;
-  }
-
-  .area-core span {
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
   }
 
   .area-node {

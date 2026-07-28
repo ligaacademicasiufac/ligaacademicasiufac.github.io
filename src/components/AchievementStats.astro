@@ -6,7 +6,7 @@ import { achievements } from '../data/site';
   {achievements.map((item) => (
     <article class="stat panel" data-reveal>
       <div>
-        <span data-counter={item.value}>0</span><b>{item.suffix}</b>
+        <span data-counter={item.value}>{item.value.toLocaleString('pt-BR')}</span><b>{item.suffix}</b>
       </div>
       <p>{item.label}</p>
     </article>

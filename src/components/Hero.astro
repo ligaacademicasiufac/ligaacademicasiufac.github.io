@@ -41,8 +41,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         class="hero-horse"
         src={`${base}/brand/horse.png`}
         alt=""
-        width="510"
-        height="820"
+        width="1024"
+        height="1536"
         data-hero-horse
         data-float
       />
@@ -172,7 +172,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     z-index: 2;
     right: 4%;
     bottom: 0;
-    width: min(24rem, 74%);
+    width: min(22rem, 70%);
+    height: auto;
+    object-fit: contain;
     filter:
       drop-shadow(0 30px 60px rgba(0,0,0,0.55))
       drop-shadow(0 0 34px rgba(148,81,184,0.42));

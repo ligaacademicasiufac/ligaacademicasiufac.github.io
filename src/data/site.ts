@@ -87,7 +87,25 @@ export const achievements = [
 ] as const;
 
 export const selectionProcess = {
-  status: 'Nenhum processo seletivo aberto.',
+  status: 'Inscrições abertas',
+  period: '27 de julho a 10 de agosto de 2026, às 23h59',
+  registrationUrl: 'https://forms.gle/vRFyR1DKDB1abXig9',
   description:
-    'Quando uma nova seleção for aberta, o edital e as instruções de inscrição serão publicados nesta página e divulgados nos canais oficiais da LASI.'
+    'A LASI/UFAC está selecionando novos membros para aprender, colaborar e desenvolver experiências em tecnologia.',
+  statuteNotice: 'Leia atentamente o Estatuto da LASI antes de enviar sua inscrição.',
+  areas: [
+    { title: 'Inteligência Artificial e Dados', icon: '🧠' },
+    { title: 'Engenharia de Software', icon: '⚙️' },
+    { title: 'Infraestrutura e Redes', icon: '🌐' }
+  ],
+  profiles: [
+    {
+      title: 'Membros efetivos',
+      description: 'Estudantes de graduação e pós-graduação da UFAC.'
+    },
+    {
+      title: 'Membros colaboradores',
+      description: 'Profissionais formados, egressos e integrantes da comunidade externa.'
+    }
+  ]
 } as const;

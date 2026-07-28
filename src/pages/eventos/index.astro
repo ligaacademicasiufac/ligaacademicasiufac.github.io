@@ -1,9 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import EventsTimeline from '../../components/EventsTimeline.astro';
 import JoinSection from '../../components/JoinSection.astro';
-import { ecoHackWinners } from '../../data/site';
+
+const events = (await getCollection('events')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout title="Eventos e oportunidades">
@@ -20,27 +22,7 @@ import { ecoHackWinners } from '../../data/site';
   <section class="section section--compact">
     <div class="container">
       <SectionHeading eyebrow="Linha do tempo" title="Atividades e oportunidades." outline="Agenda" />
-      <EventsTimeline />
-    </div>
-  </section>
-
-  <section class="section eco-section">
-    <div class="container">
-      <SectionHeading eyebrow="Amazon Eco-Hack" title="Campeões que transformam ideias em impacto." outline="Resultados" />
-      <div class="winner-grid">
-        {ecoHackWinners.map((winner, index) => (
-          <article class="winner-card panel" data-reveal>
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <p>{winner.position}</p>
-            <h2>{winner.project}</h2>
-            <dl>
-              <div><dt>Equipe</dt><dd>{winner.team}</dd></div>
-              <div><dt>Trilha</dt><dd>{winner.track}</dd></div>
-              <div><dt>Premiação</dt><dd>{winner.prize}</dd></div>
-            </dl>
-          </article>
-        ))}
-      </div>
+      <EventsTimeline events={events} />
     </div>
   </section>
 
@@ -50,76 +32,5 @@ import { ecoHackWinners } from '../../data/site';
 <style>
   .page-hero {
     padding-top: 10rem;
-  }
-
-  .eco-section {
-    background: radial-gradient(circle at 50% 45%, rgba(148,81,184,0.12), transparent 35rem);
-  }
-
-  .winner-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-
-  .winner-card {
-    min-height: 26rem;
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem;
-  }
-
-  .winner-card > span {
-    color: var(--violet-400);
-    font-family: var(--display);
-    font-size: 2rem;
-  }
-
-  .winner-card > p {
-    margin: 3.5rem 0 0.5rem;
-    color: var(--violet-400);
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .winner-card h2 {
-    margin: 0;
-    font-family: var(--display);
-    font-size: clamp(1.8rem, 3vw, 3rem);
-    line-height: 0.95;
-    text-transform: uppercase;
-  }
-
-  .winner-card dl {
-    display: grid;
-    gap: 0.85rem;
-    margin: auto 0 0;
-  }
-
-  .winner-card dl div {
-    display: grid;
-    grid-template-columns: 5.5rem 1fr;
-    gap: 0.75rem;
-  }
-
-  .winner-card dt {
-    color: #79869f;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .winner-card dd {
-    margin: 0;
-    color: #d8e0ef;
-    font-size: 0.85rem;
-  }
-
-  @media (max-width: 820px) {
-    .winner-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

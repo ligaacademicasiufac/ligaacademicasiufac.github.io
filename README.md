@@ -9,7 +9,7 @@ O projeto cobre as fases 1 a 4 do planejamento:
 1. Fundação visual: tokens, paleta, tipografia, assets, componentes e padrões de layout.
 2. MVP funcional: Home, Sobre, Áreas, Projetos, Eventos, Conquistas, Diretoria, Participe, Links da bio e página 404.
 3. Motion design: hero animado, scroll reveal, parallax, contadores, linhas SVG, microinterações e suporte a `prefers-reduced-motion`.
-4. Conteúdo institucional: diretoria 2026, áreas estratégicas, Amazon Eco-Hack, projetos e trilhas de formação.
+4. Conteúdo institucional: diretoria 2026, áreas estratégicas, eventos, projetos e trilhas de formação.
 
 ## Requisitos
 
@@ -72,7 +72,7 @@ Atualize ali:
 - áreas;
 - eventos;
 - métricas;
-- ganhadores do Eco-Hack.
+- informações de eventos e seus resultados.
 
 ### Projetos
 

@@ -42,7 +42,7 @@ O site está configurado para geração estática e publicação no GitHub Pages
 
 - Diretoria 2026.
 - Três áreas estratégicas.
-- Amazon Eco-Hack e seus vencedores.
+- Eventos e seus resultados.
 - Projetos em Content Collections.
 - Agenda inicial e chamadas para participação.
 - Hub de links para a bio do Instagram.

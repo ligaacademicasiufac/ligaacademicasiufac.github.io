@@ -15,9 +15,35 @@ const projects = defineCollection({
     order: z.number().default(99),
     cover: z.string(),
     tags: z.array(z.string()).default([]),
-    externalUrl: z.string().url().optional(),
-    repositoryUrl: z.string().url().optional()
+    externalUrl: z.string().url().optional()
   })
 });
 
-export const collections = { projects };
+const events = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/events' }),
+  schema: z.object({
+    title: z.string(),
+    shortTitle: z.string(),
+    eyebrow: z.string(),
+    summary: z.string(),
+    date: z.string(),
+    status: z.enum(['aberto', 'concluido', 'planejado']),
+    type: z.string(),
+    order: z.number().default(99),
+    cover: z.string(),
+    areas: z.array(z.string()).default([]),
+    prizeTotal: z.string().optional(),
+    externalUrl: z.string().url().optional(),
+    criteria: z.array(z.string()).default([]),
+    jury: z.array(z.object({ name: z.string() })).default([]),
+    results: z.array(z.object({
+      position: z.string(),
+      track: z.string(),
+      team: z.string(),
+      project: z.string(),
+      prize: z.string()
+    })).default([])
+  })
+});
+
+export const collections = { projects, events };

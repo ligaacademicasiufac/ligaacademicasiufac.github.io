@@ -12,8 +12,7 @@ tags:
   - "Astro"
   - "TypeScript"
   - "GSAP"
-  - "GitHub Pages"
-repositoryUrl: "https://github.com/ligaacademicasiufac/ligaacademicasiufac.github.io"
+  - "Site estático"
 ---
 
 ## Objetivo
@@ -22,7 +21,7 @@ Construir uma presença digital institucional que seja simultaneamente informati
 
 ## Arquitetura
 
-O projeto utiliza geração estática com Astro, conteúdo versionado no GitHub, animações com GSAP e publicação automatizada no GitHub Pages.
+O projeto utiliza geração estática com Astro, conteúdo versionado, animações com GSAP e publicação automatizada.
 
 ## Princípios
 

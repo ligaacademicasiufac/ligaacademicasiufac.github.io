@@ -32,9 +32,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           {project.data.externalUrl && (
             <a class="button" href={project.data.externalUrl} target="_blank" rel="noreferrer">Ver projeto ↗</a>
           )}
-          {project.data.repositoryUrl && (
-            <a class="button button--ghost" href={project.data.repositoryUrl} target="_blank" rel="noreferrer">Código no GitHub ↗</a>
-          )}
         </div>
       </div>
     </header>

@@ -4,9 +4,7 @@ export const site = {
   description:
     'Ensino, pesquisa, extensão e inovação em Sistemas de Informação na Universidade Federal do Acre.',
   tagline: 'Conecte-se. Colabore. Transforme.',
-  github: 'https://github.com/ligaacademicasiufac',
   instagram: 'https://www.instagram.com/lasi.ufac/',
-  kaggle: 'https://www.kaggle.com/competitions/eco-hack',
   whatsapp: '#whatsapp-qr'
 };
 
@@ -20,7 +18,7 @@ export const areas = [
     description:
       'Modelos inteligentes, análise de dados, aprendizado de máquina e soluções orientadas por informação.',
     longDescription:
-      'A trilha reúne estudos e projetos em inteligência artificial, ciência de dados, aprendizado de máquina, visão computacional, processamento de linguagem e engenharia de dados. O foco é transformar dados em soluções úteis, responsáveis e aplicáveis ao contexto amazônico.',
+      'A trilha reúne estudos e projetos em inteligência artificial, ciência de dados, aprendizado de máquina, visão computacional, processamento de linguagem e engenharia de dados. O foco é transformar dados em soluções úteis, responsáveis e aplicáveis a contextos reais.',
     topics: ['Aprendizado de máquina', 'Ciência de dados', 'Visão computacional', 'IA generativa'],
     accent: 'violet'
   },
@@ -80,76 +78,16 @@ export const directors = [
   }
 ] as const;
 
-export const events = [
-  {
-    date: '2026',
-    title: 'Amazon Eco-Hack',
-    type: 'Hackathon',
-    description:
-      'Competição com foco em soluções tecnológicas para a Amazônia, inteligência artificial e impacto comunitário.',
-    status: 'Realizado'
-  },
-  {
-    date: 'Contínuo',
-    title: 'Grupo de avisos',
-    type: 'Comunidade',
-    description:
-      'Canal para oportunidades, competições, eventos, mentorias e atividades da LASI.',
-    status: 'Aberto'
-  },
-  {
-    date: 'Em breve',
-    title: 'Trilhas de formação',
-    type: 'Ensino',
-    description:
-      'Atividades orientadas pelas três áreas estratégicas da Liga.',
-    status: 'Planejamento'
-  }
-] as const;
-
 export const achievements = [
-  {
-    value: 3,
-    suffix: '',
-    label: 'áreas estratégicas'
-  },
-  {
-    value: 4,
-    suffix: '',
-    label: 'jurados no Eco-Hack'
-  },
   {
     value: 2000,
     suffix: ' USD',
-    label: 'em premiações no Eco-Hack'
-  },
-  {
-    value: 5,
-    suffix: '',
-    label: 'membros na diretoria 2026'
+    label: 'em premiações'
   }
 ] as const;
 
-export const ecoHackWinners = [
-  {
-    position: '1º lugar geral',
-    track: 'Best Amazon Eco-Hack',
-    team: 'cybermazinho',
-    project: 'NÚCLEO: IA',
-    prize: 'US$ 1.000'
-  },
-  {
-    position: 'Vencedor da trilha',
-    track: 'The Green AI & Edge Track',
-    team: 'Samauma',
-    project: 'BioScan AI',
-    prize: 'US$ 500'
-  },
-  {
-    position: 'Vencedor da trilha',
-    track: 'GenAI for Community Impact',
-    team: 'Geminautas',
-    project: 'GemmaGuardian',
-    prize: 'US$ 500'
-  }
-] as const;
+export const selectionProcess = {
+  status: 'Nenhum processo seletivo aberto.',
+  description:
+    'Quando uma nova seleção for aberta, o edital e as instruções de inscrição serão publicados nesta página e divulgados nos canais oficiais da LASI.'
+} as const;

@@ -7,9 +7,9 @@ const linkItems = [
   { label: 'Conhecer a LASI', href: `${base}/sobre/`, icon: '→' },
   { label: 'Projetos e iniciativas', href: `${base}/projetos/`, icon: '→' },
   { label: 'Eventos e oportunidades', href: `${base}/eventos/`, icon: '→' },
+  { label: 'Processos seletivos', href: `${base}/processos-seletivos/`, icon: '→' },
   { label: 'Áreas de estudo', href: `${base}/areas/`, icon: '→' },
   { label: 'Diretoria 2026', href: `${base}/diretoria/`, icon: '→' },
-  { label: 'GitHub', href: site.github, icon: '↗', external: true },
   { label: 'Instagram', href: site.instagram, icon: '↗', external: true }
 ];
 ---
@@ -44,7 +44,7 @@ const linkItems = [
         <h2>Escaneie e entre na comunidade.</h2>
         <img src={`${base}/social/whatsapp-qr.png`} alt="QR Code do grupo de avisos da LASI no WhatsApp" />
         <small>
-          Substitua o link direto do WhatsApp no arquivo <code>src/data/site.ts</code> quando ele estiver disponível.
+          Aponte a câmera para entrar no grupo de avisos da LASI.
         </small>
       </section>
 
@@ -163,10 +163,6 @@ const linkItems = [
   .qr-panel small {
     color: var(--muted);
     line-height: 1.5;
-  }
-
-  .qr-panel code {
-    color: var(--violet-400);
   }
 
   .links-footer {

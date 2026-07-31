@@ -4,8 +4,12 @@ export const site = {
   description:
     'Ensino, pesquisa, extensão e inovação em Sistemas de Informação na Universidade Federal do Acre.',
   tagline: 'Conecte-se. Colabore. Transforme.',
-  instagram: 'https://www.instagram.com/lasi.ufac/',
-  whatsapp: '#whatsapp-qr'
+  social: {
+    instagram: 'https://www.instagram.com/lasi.ufac/',
+    linkedin: 'https://www.linkedin.com/company/lasi-ufac',
+    youtube: 'https://www.youtube.com/@Ligaasi',
+    whatsapp: 'https://chat.whatsapp.com/BzjNJqaJP7S6B9Ho3EgCQO'
+  }
 };
 
 export const areas = [

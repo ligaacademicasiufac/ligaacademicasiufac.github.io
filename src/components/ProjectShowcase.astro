@@ -134,7 +134,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     right: 1rem;
     color: rgba(255,255,255,0.18);
     font-family: var(--display);
-    font-size: 3rem;
+    font-size: clamp(2rem, 6vw, 3rem);
   }
 
   @media (max-width: 760px) {
@@ -149,6 +149,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     .project-media {
       min-height: 18rem;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .project-card,
+    .project-card:nth-child(even) {
+      min-height: 20rem;
+    }
+
+    .project-media {
+      min-height: 14rem;
     }
   }
 </style>

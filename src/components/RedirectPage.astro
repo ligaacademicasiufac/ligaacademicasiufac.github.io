@@ -1,0 +1,104 @@
+---
+interface Props {
+  destination: string;
+  label: string;
+}
+
+const { destination, label } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="refresh" content={`0; url=${destination}`} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={destination} />
+    <title>Redirecionando para {label} | LASI</title>
+    <style>
+      :root {
+        --ink-1000: #02091e;
+        --ink-900: #050d24;
+        --violet-400: #b16bd1;
+        --muted: #8b9bb5;
+        --white: #f4f7ff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        background:
+          radial-gradient(circle at 50% 12%, rgba(148, 81, 184, 0.24), transparent 22rem),
+          linear-gradient(160deg, var(--ink-1000), var(--ink-900));
+        color: var(--white);
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        text-align: center;
+      }
+
+      .redirect-card {
+        max-width: 28rem;
+        display: grid;
+        gap: 1.25rem;
+        place-items: center;
+      }
+
+      .redirect-card p {
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.6;
+      }
+
+      .redirect-card a {
+        display: inline-block;
+        padding: 0.85rem 1.75rem;
+        border: 1px solid rgba(177, 107, 209, 0.55);
+        border-radius: 999px;
+        color: var(--white);
+        text-decoration: none;
+        font-weight: 700;
+        background: linear-gradient(135deg, rgba(148, 81, 184, 0.35), rgba(8, 93, 163, 0.25));
+        transition: transform 180ms ease, border-color 180ms ease;
+      }
+
+      .redirect-card a:hover {
+        transform: translateY(-2px);
+        border-color: var(--violet-400);
+      }
+
+      .spinner {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 3px solid rgba(177, 107, 209, 0.2);
+        border-top-color: var(--violet-400);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="redirect-card">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Redirecionando para o {label} da LASI…</p>
+      <a href={destination}>Clique aqui caso o redirecionamento não aconteça.</a>
+    </div>
+
+    <script define:vars={{ destination }}>
+      window.location.replace(destination);
+    </script>
+  </body>
+</html>

@@ -90,4 +90,21 @@ const { area } = Astro.props;
   .topic-stack strong {
     font-size: 1.1rem;
   }
+
+  @media (max-width: 540px) {
+    .area-hero {
+      min-height: auto;
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+    }
+
+    .area-number {
+      font-size: clamp(10rem, 35vw, 20rem);
+    }
+
+    .topic-stack article {
+      grid-template-columns: 2.5rem 1fr;
+      padding: 0.9rem;
+    }
+  }
 </style>

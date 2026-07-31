@@ -113,4 +113,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       min-height: 29rem;
     }
   }
+
+  @media (max-width: 540px) {
+    .director-card,
+    .director-card:nth-child(1),
+    .director-card:nth-child(2) {
+      min-height: 24rem;
+    }
+
+    .director-copy {
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
+    }
+  }
 </style>

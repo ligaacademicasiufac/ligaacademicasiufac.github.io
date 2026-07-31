@@ -17,7 +17,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </p>
       <div class="button-row">
         <a class="button" href={`${base}/links/`} data-magnetic>Entrar na comunidade <span>↗</span></a>
-        <a class="button button--ghost" href={site.instagram} target="_blank" rel="noreferrer">Acompanhar no Instagram</a>
+        <a class="button button--ghost" href={site.social.instagram} target="_blank" rel="noopener noreferrer">Acompanhar no Instagram</a>
       </div>
     </div>
   </div>
@@ -38,15 +38,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .join-art {
     position: relative;
+    display: grid;
+    place-items: center;
     align-self: stretch;
+    overflow: hidden;
   }
 
   .join-art img {
-    position: absolute;
     z-index: 2;
-    bottom: -1.5rem;
-    left: 10%;
     width: min(22rem, 80%);
+    max-height: calc(100% - 3rem);
+    object-fit: contain;
     filter: drop-shadow(0 24px 48px rgba(0,0,0,0.45));
   }
 
@@ -72,13 +74,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
 
     .join-art {
-      min-height: 20rem;
+      height: 20rem;
     }
 
     .join-art img {
-      left: 50%;
-      width: 15rem;
-      transform: translateX(-50%);
+      width: min(15rem, 75%);
+      max-height: calc(100% - 2rem);
+    }
+  }
+
+  @media (max-width: 540px) {
+    .join-panel {
+      min-height: auto;
+    }
+
+    .join-art {
+      height: 14rem;
+    }
+
+    .join-art img {
+      width: 12rem;
+    }
+
+    .join-copy {
+      padding: clamp(1.5rem, 5vw, 2.5rem);
     }
   }
 </style>

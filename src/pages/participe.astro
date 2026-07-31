@@ -20,7 +20,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <div><strong>Grupo de avisos</strong><small>Oportunidades, eventos e comunicados.</small></div>
             <b>↗</b>
           </a>
-          <a class="panel join-option" href={site.instagram} target="_blank" rel="noreferrer">
+          <a class="panel join-option" href={site.social.instagram} target="_blank" rel="noopener noreferrer">
             <span>02</span>
             <div><strong>Instagram</strong><small>Projetos, resultados e bastidores.</small></div>
             <b>↗</b>
@@ -132,6 +132,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     .join-visual {
       min-height: 32rem;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .join-visual {
+      min-height: 24rem;
     }
   }
 </style>

@@ -20,6 +20,7 @@ const { eyebrow, title, outline, align = 'left' } = Astro.props;
     position: relative;
     z-index: 1;
     margin-bottom: clamp(2.5rem, 6vw, 5rem);
+    overflow: hidden;
   }
 
   .section-heading--center {
@@ -51,5 +52,11 @@ const { eyebrow, title, outline, align = 'left' } = Astro.props;
 
   .section-heading--center .section-outline {
     right: 0;
+  }
+
+  @media (max-width: 760px) {
+    .section-outline {
+      display: none;
+    }
   }
 </style>

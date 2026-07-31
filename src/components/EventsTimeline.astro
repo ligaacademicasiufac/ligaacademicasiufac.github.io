@@ -163,4 +163,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       min-height: 16rem;
     }
   }
+
+  @media (max-width: 540px) {
+    .timeline-item {
+      grid-template-columns: 2.5rem 1fr;
+      gap: 0.7rem;
+    }
+
+    .timeline::before {
+      left: 1.25rem;
+    }
+
+    .timeline-marker {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .timeline-marker span {
+      font-size: 0.62rem;
+    }
+
+    .timeline-cover {
+      min-height: 12rem;
+    }
+  }
 </style>

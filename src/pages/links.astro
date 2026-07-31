@@ -3,14 +3,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const linkItems = [
-  { label: 'Entrar no grupo de avisos', href: '#whatsapp-qr', icon: '↗', primary: true },
+  { label: 'Entrar no grupo de avisos', href: `${base}/whatsapp/`, icon: '↗', primary: true },
+  { label: 'Instagram', href: `${base}/instagram/`, icon: '↗', external: true },
+  { label: 'LinkedIn', href: `${base}/linkedin/`, icon: '↗', external: true },
+  { label: 'YouTube', href: `${base}/youtube/`, icon: '↗', external: true },
   { label: 'Conhecer a LASI', href: `${base}/sobre/`, icon: '→' },
   { label: 'Projetos e iniciativas', href: `${base}/projetos/`, icon: '→' },
   { label: 'Eventos e oportunidades', href: `${base}/eventos/`, icon: '→' },
   { label: 'Processos seletivos', href: `${base}/processos-seletivos/`, icon: '→' },
   { label: 'Áreas de estudo', href: `${base}/areas/`, icon: '→' },
-  { label: 'Diretoria 2026', href: `${base}/diretoria/`, icon: '→' },
-  { label: 'Instagram', href: site.instagram, icon: '↗', external: true }
+  { label: 'Diretoria 2026', href: `${base}/diretoria/`, icon: '→' }
 ];
 ---
 
@@ -30,7 +32,7 @@ const linkItems = [
             class:list={['link-card panel', { 'link-card--primary': item.primary }]}
             href={item.href}
             target={item.external ? '_blank' : undefined}
-            rel={item.external ? 'noreferrer' : undefined}
+            rel={item.external ? 'noopener noreferrer' : undefined}
             data-reveal
           >
             <span>{item.label}</span>

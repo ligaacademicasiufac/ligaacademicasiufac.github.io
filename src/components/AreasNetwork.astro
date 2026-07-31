@@ -5,9 +5,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <div class="area-network panel" data-area-network data-reveal>
   <svg class="area-lines" viewBox="0 0 1000 650" aria-hidden="true">
-    <path d="M500 320 L500 90" data-area-line />
-    <path d="M500 320 L180 515" data-area-line />
-    <path d="M500 320 L820 515" data-area-line />
+    <path d="M500 351 L500 90" data-area-line />
+    <path d="M500 351 L180 515" data-area-line />
+    <path d="M500 351 L820 515" data-area-line />
   </svg>
 
   <div class="area-core" data-pulse>
@@ -55,7 +55,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .area-core {
     position: absolute;
     z-index: 2;
-    top: 50%;
+    top: 54%;
     left: 50%;
     display: grid;
     width: 11rem;
@@ -66,7 +66,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     border-radius: 50%;
     background: rgba(4, 14, 35, 0.82);
     box-shadow: 0 0 70px rgba(148,81,184,0.25);
-    transform: translate(-50%, -50%);
+    translate: -50% -50%;
   }
 
   .area-core img {
@@ -166,6 +166,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .area-node:hover,
     .area-node--1:hover {
       transform: translateY(-4px);
+    }
+  }
+
+  @media (max-width: 540px) {
+    .area-network {
+      gap: 0.75rem;
+      padding: 0.75rem;
+    }
+
+    .area-node {
+      padding: 1rem;
     }
   }
 </style>

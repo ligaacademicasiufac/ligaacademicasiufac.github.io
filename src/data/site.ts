@@ -91,6 +91,7 @@ export const achievements = [
 ] as const;
 
 export const selectionProcess = {
+  isOpen: true,
   status: 'Inscrições abertas',
   period: '27 de julho a 10 de agosto de 2026, às 23h59',
   registrationUrl: 'https://forms.gle/vRFyR1DKDB1abXig9',

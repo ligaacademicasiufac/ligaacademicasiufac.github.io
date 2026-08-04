@@ -1,16 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { site } from '../data/site';
+import { selectionProcess, site } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const linkItems = [
   { label: 'Entrar no grupo de avisos', href: `${base}/whatsapp/`, icon: '↗', primary: true },
+  { label: 'Processos seletivos', href: `${base}/processos-seletivos/`, icon: '→', highlight: selectionProcess.isOpen },
   { label: 'Instagram', href: `${base}/instagram/`, icon: '↗', external: true },
   { label: 'LinkedIn', href: `${base}/linkedin/`, icon: '↗', external: true },
   { label: 'YouTube', href: `${base}/youtube/`, icon: '↗', external: true },
   { label: 'Conhecer a LASI', href: `${base}/sobre/`, icon: '→' },
   { label: 'Projetos e iniciativas', href: `${base}/projetos/`, icon: '→' },
   { label: 'Eventos e oportunidades', href: `${base}/eventos/`, icon: '→' },
-  { label: 'Processos seletivos', href: `${base}/processos-seletivos/`, icon: '→' },
   { label: 'Áreas de estudo', href: `${base}/areas/`, icon: '→' },
   { label: 'Diretoria 2026', href: `${base}/diretoria/`, icon: '→' }
 ];
@@ -29,13 +29,16 @@ const linkItems = [
       <nav class="links-list" aria-label="Links principais">
         {linkItems.map((item) => (
           <a
-            class:list={['link-card panel', { 'link-card--primary': item.primary }]}
+            class:list={['link-card panel', { 'link-card--primary': item.primary, 'link-card--highlight': item.highlight }]}
             href={item.href}
             target={item.external ? '_blank' : undefined}
             rel={item.external ? 'noopener noreferrer' : undefined}
             data-reveal
           >
-            <span>{item.label}</span>
+            <span class="link-label">
+              {item.label}
+              {item.highlight && <small>{selectionProcess.status}</small>}
+            </span>
             <b>{item.icon}</b>
           </a>
         ))}
@@ -129,12 +132,43 @@ const linkItems = [
     background: linear-gradient(135deg, rgba(148,81,184,0.55), rgba(8,93,163,0.45));
   }
 
+  .link-card--highlight {
+    border-color: var(--violet-400);
+    background: linear-gradient(135deg, rgba(148,81,184,0.3), rgba(8,93,163,0.18));
+    animation: selection-pulse 2.4s ease-in-out infinite;
+  }
+
+  .link-label {
+    display: grid;
+    gap: 0.18rem;
+  }
+
+  .link-label small {
+    color: var(--violet-400);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
   .link-card b {
     color: var(--violet-400);
   }
 
   .link-card--primary b {
     color: var(--white);
+  }
+
+  @keyframes selection-pulse {
+    50% {
+      box-shadow: 0 0 0 4px rgba(177,107,209,0.14), 0 18px 48px rgba(148,81,184,0.34);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link-card--highlight {
+      animation: none;
+    }
   }
 
   .qr-panel {

@@ -25,7 +25,7 @@ topics:
   - "Kubernetes"
 areas:
   - "Infraestrutura e Redes"
-externalUrl: "https://www.sympla.com.br/evento/linuxtips-local-rio-branco/3439933"
+externalUrl: "https://www.sympla.com.br/evento/linuxtipslocal---rio-branco/3439933?token=dfe7447bb7dd692e5d6e00cbee2706c7"
 ctaLabel: "Garantir ingresso"
 ---
 

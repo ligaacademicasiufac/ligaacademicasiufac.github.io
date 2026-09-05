@@ -1,0 +1,413 @@
+---
+interface FeaturedEventData {
+  id: string;
+  data: {
+    shortTitle: string;
+    title: string;
+    date: string;
+    time?: string;
+    location?: string;
+    externalUrl?: string;
+    ctaLabel?: string;
+    topics: string[];
+  };
+}
+
+interface Props {
+  event: FeaturedEventData;
+}
+
+const { event } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="local-feature section" aria-labelledby="local-title">
+  <div class="local-pattern" aria-hidden="true">
+    <span>LINUX</span><span>DEVOPS</span><span>SRE</span><span>K8S</span><span>CONTAINERS</span>
+  </div>
+
+  <div class="container local-shell">
+    <div class="local-copy" data-reveal="left">
+      <p class="local-kicker">Evento em destaque · apoio LASI</p>
+      <p class="local-city">RIO BRANCO_</p>
+      <h2 id="local-title"><span>.LOCAL</span><b>26</b></h2>
+      <p class="local-lead">
+        Linux, DevOps, SRE, Containers e Kubernetes chegam à UFAC em uma noite de conteúdo técnico, networking e comunidade.
+      </p>
+
+      <div class="local-meta" aria-label="Informações principais do evento">
+        <div><span>Data</span><strong>21 SET 2026</strong></div>
+        <div><span>Horário</span><strong>{event.data.time ?? '18:30 às 22:30'}</strong></div>
+        <div><span>Local</span><strong>UFAC · Bloco de Mestrados</strong></div>
+      </div>
+
+      <div class="local-actions">
+        {event.data.externalUrl && (
+          <a class="local-button" href={event.data.externalUrl} target="_blank" rel="noopener noreferrer">
+            {event.data.ctaLabel ?? 'Garantir ingresso'} <span>↗</span>
+          </a>
+        )}
+        <a class="local-secondary" href={`${base}/eventos/${event.id}/`}>Ver detalhes →</a>
+      </div>
+    </div>
+
+    <div class="local-visual" data-reveal="right" aria-hidden="true">
+      <div class="local-frame">
+        <span class="local-code">&gt;_</span>
+        <div class="local-terminal">
+          <span>$ community --city rio-branco</span>
+          <span>$ date 21.09.2026</span>
+          <span>$ learn linux containers kubernetes</span>
+          <span class="terminal-live">community connected_</span>
+        </div>
+        <div class="local-date">21<span>/09</span></div>
+      </div>
+      <div class="local-countdown" data-event-countdown data-target="2026-09-21T18:30:00-05:00">
+        <span>FALTAM</span>
+        <strong>16 DIAS</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .local-feature {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    background:
+      radial-gradient(circle at 78% 34%, rgba(0, 176, 111, 0.18), transparent 20rem),
+      radial-gradient(circle at 18% 80%, rgba(255, 95, 0, 0.2), transparent 24rem),
+      #070707;
+    isolation: isolate;
+  }
+
+  .local-feature::before,
+  .local-feature::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    pointer-events: none;
+  }
+
+  .local-feature::before {
+    top: -9rem;
+    right: -7rem;
+    width: 24rem;
+    height: 24rem;
+    border: 2px solid rgba(0, 176, 111, 0.22);
+    transform: rotate(19deg);
+  }
+
+  .local-feature::after {
+    bottom: -5rem;
+    left: -4rem;
+    width: 18rem;
+    height: 18rem;
+    border: 2px solid rgba(255, 95, 0, 0.24);
+    transform: rotate(42deg);
+  }
+
+  .local-pattern {
+    position: absolute;
+    top: 1rem;
+    right: -1rem;
+    left: -1rem;
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+    overflow: hidden;
+    color: rgba(0, 176, 111, 0.22);
+    font-size: clamp(1.8rem, 4vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -0.08em;
+    white-space: nowrap;
+    transform: rotate(-2deg);
+  }
+
+  .local-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.95fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: center;
+  }
+
+  .local-kicker,
+  .local-city {
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .local-kicker {
+    color: #00b06f;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+  }
+
+  .local-city {
+    margin-top: 1.4rem;
+    font-size: clamp(1.15rem, 2vw, 1.75rem);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+  }
+
+  .local-copy h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.15em;
+    margin: 0.2rem 0 0;
+    font-family: var(--display);
+    font-size: clamp(4.6rem, 10vw, 9.5rem);
+    line-height: 0.82;
+    letter-spacing: -0.075em;
+    text-transform: uppercase;
+  }
+
+  .local-copy h2 span {
+    color: #00b06f;
+  }
+
+  .local-copy h2 b {
+    color: #fff;
+  }
+
+  .local-lead {
+    max-width: 58ch;
+    margin: 1.5rem 0 0;
+    color: #d6d6d6;
+    font-size: clamp(1rem, 1.55vw, 1.15rem);
+    line-height: 1.65;
+  }
+
+  .local-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.7rem;
+    margin-top: 2rem;
+  }
+
+  .local-meta div {
+    min-width: 0;
+    padding: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .local-meta span,
+  .local-meta strong {
+    display: block;
+  }
+
+  .local-meta span {
+    color: #00b06f;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .local-meta strong {
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    line-height: 1.35;
+  }
+
+  .local-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.6rem;
+  }
+
+  .local-button,
+  .local-secondary {
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .local-button {
+    display: inline-flex;
+    min-height: 3.3rem;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.8rem 1.1rem;
+    color: #050505;
+    background: #00b06f;
+    box-shadow: 10px 10px 0 #ff5f00;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .local-button:hover,
+  .local-button:focus-visible {
+    transform: translate(-3px, -3px);
+    box-shadow: 13px 13px 0 #ff5f00;
+  }
+
+  .local-secondary {
+    color: #f6f6f6;
+    font-size: 0.8rem;
+  }
+
+  .local-visual {
+    position: relative;
+    min-height: 35rem;
+  }
+
+  .local-frame {
+    position: absolute;
+    inset: 2rem 1rem 5rem;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.16);
+    background:
+      linear-gradient(130deg, rgba(255,95,0,0.16), transparent 38%),
+      linear-gradient(310deg, rgba(0,176,111,0.14), transparent 45%),
+      #0c0c0c;
+    transform: rotate(2deg);
+    box-shadow: 24px 28px 0 rgba(255,95,0,0.12);
+  }
+
+  .local-code {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #ff5f00;
+    font-family: monospace;
+    font-size: 3rem;
+    font-weight: 900;
+  }
+
+  .local-terminal {
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    left: 2rem;
+    display: grid;
+    gap: 0.85rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: clamp(0.78rem, 1.3vw, 0.95rem);
+  }
+
+  .local-terminal span {
+    color: #b7b7b7;
+  }
+
+  .local-terminal .terminal-live {
+    color: #00b06f;
+  }
+
+  .local-date {
+    position: absolute;
+    top: 35%;
+    left: 7%;
+    color: #fff;
+    font-family: var(--display);
+    font-size: clamp(5rem, 10vw, 9rem);
+    line-height: 0.72;
+    letter-spacing: -0.08em;
+  }
+
+  .local-date span {
+    display: block;
+    margin-left: 0.5em;
+    color: #00b06f;
+    font-size: 0.38em;
+    letter-spacing: -0.04em;
+  }
+
+  .local-countdown {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    gap: 0.15rem;
+    min-width: 12rem;
+    padding: 1rem 1.25rem;
+    color: #060606;
+    background: #00b06f;
+    transform: rotate(-2deg);
+  }
+
+  .local-countdown span {
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+  }
+
+  .local-countdown strong {
+    font-family: var(--display);
+    font-size: 1.65rem;
+  }
+
+  @media (max-width: 900px) {
+    .local-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .local-visual {
+      min-height: 28rem;
+      max-width: 38rem;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .local-meta {
+      grid-template-columns: 1fr;
+    }
+
+    .local-copy h2 {
+      font-size: clamp(4rem, 20vw, 6.3rem);
+    }
+
+    .local-visual {
+      min-height: 24rem;
+    }
+
+    .local-frame {
+      inset: 1rem 0.5rem 4rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .local-button {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const countdown = document.querySelector<HTMLElement>('[data-event-countdown]');
+
+  if (countdown) {
+    const target = new Date(countdown.dataset.target ?? '').getTime();
+    const label = countdown.querySelector('span');
+    const value = countdown.querySelector('strong');
+
+    const renderCountdown = () => {
+      const now = Date.now();
+      const diff = target - now;
+      const eventEnd = new Date('2026-09-21T22:30:00-05:00').getTime();
+
+      if (now > eventEnd) {
+        if (label) label.textContent = 'EVENTO';
+        if (value) value.textContent = 'REALIZADO';
+        return;
+      }
+
+      if (diff <= 0) {
+        if (label) label.textContent = 'É HOJE';
+        if (value) value.textContent = 'RIO BRANCO';
+        return;
+      }
+
+      const days = Math.ceil(diff / 86_400_000);
+      if (label) label.textContent = 'FALTAM';
+      if (value) value.textContent = `${days} ${days === 1 ? 'DIA' : 'DIAS'}`;
+    };
+
+    renderCountdown();
+    window.setInterval(renderCountdown, 60_000);
+  }
+</script>

@@ -13,7 +13,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <p class="eyebrow">Conheça a LASI</p>
         <h1 class="display">Tecnologia feita em comunidade.</h1>
         <p class="lead">
-          A LASI é uma entidade estudantil da UFAC que reúne pessoas interessadas em aprender, pesquisar e criar soluções com tecnologia. Transformamos conhecimento acadêmico em experiências práticas, projetos colaborativos e impacto para além da sala de aula.
+          A Liga Acadêmica de Sistemas de Informação é uma entidade estudantil de caráter científico, educacional e extensionista, sem fins lucrativos, vinculada academicamente ao curso de Sistemas de Informação da UFAC e orientada pela integração entre ensino, pesquisa e extensão.
         </p>
       </div>
       <div class="about-logo panel" data-reveal="right">
@@ -23,23 +23,33 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   </section>
 
   <section class="section section--compact">
+    <div class="container institutional-note panel" data-reveal>
+      <p class="eyebrow">Propósito institucional</p>
+      <h2>Formação acadêmica conectada às demandas da sociedade acreana.</h2>
+      <p>
+        A LASI busca aprofundar conhecimentos teóricos e práticos em tecnologia, fomentar a produção científica discente, desenvolver ações extensionistas e fortalecer o protagonismo e a colaboração entre estudantes, pesquisadores e comunidade.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--compact">
     <div class="container">
-      <SectionHeading eyebrow="Propósito" title="Aprender junto. Construir junto." outline="Objetivo" />
+      <SectionHeading eyebrow="Princípio de atuação" title="Aprender. Pesquisar. Compartilhar." outline="Objetivo" />
       <div class="purpose-grid">
         <article class="panel purpose-card" data-reveal>
           <span>01</span>
           <h2>Ensino</h2>
-          <p>Trilhas de estudo, oficinas, mentorias e encontros para tornar o aprendizado contínuo e acessível.</p>
+          <p>Aprofundamento teórico-prático, grupos de estudo, oficinas e atividades que complementam a formação acadêmica.</p>
         </article>
         <article class="panel purpose-card" data-reveal>
           <span>02</span>
           <h2>Pesquisa</h2>
-          <p>Investigação, experimentação e desenvolvimento de soluções com curiosidade, método e rigor acadêmico.</p>
+          <p>Desenvolvimento de projetos e produção científica com método, experimentação e compromisso com a qualidade acadêmica.</p>
         </article>
         <article class="panel purpose-card" data-reveal>
           <span>03</span>
           <h2>Extensão</h2>
-          <p>Projetos, eventos e iniciativas que conectam universidade, profissionais e comunidade.</p>
+          <p>Ações que aproximam conhecimento computacional, universidade e sociedade por meio de projetos, eventos e iniciativas práticas.</p>
         </article>
       </div>
     </div>
@@ -73,6 +83,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .about-logo img {
     width: min(28rem, 85%);
     filter: drop-shadow(0 30px 80px rgba(0,0,0,0.5));
+  }
+
+  .institutional-note {
+    padding: clamp(1.8rem, 5vw, 3.5rem);
+    background:
+      radial-gradient(circle at 88% 15%, rgba(17,85,204,0.2), transparent 18rem),
+      rgba(255,255,255,0.028);
+  }
+
+  .institutional-note h2 {
+    max-width: 18ch;
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(2rem, 4.5vw, 4rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .institutional-note > p:last-child {
+    max-width: 70ch;
+    margin: 1.2rem 0 0;
+    color: var(--muted);
+    line-height: 1.7;
   }
 
   .purpose-grid {

@@ -1,7 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { site } from '../data/site';
+import { selectionProcess, site } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const featuredEvent = (await getCollection('events')).find((event) => event.data.featured);
 ---
 
 <BaseLayout title="Faça parte">
@@ -11,7 +13,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <p class="eyebrow">Entre para a comunidade</p>
         <h1 class="display">Conecte-se. Colabore. Transforme.</h1>
         <p class="lead">
-          Acompanhe processos seletivos, participe de projetos, receba oportunidades e desenvolva novas habilidades com a LASI.
+          Acompanhe eventos, oportunidades, projetos e futuras seleções da LASI pelos nossos canais oficiais.
         </p>
 
         <div class="join-options">
@@ -22,15 +24,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           </a>
           <a class="panel join-option" href={site.social.instagram} target="_blank" rel="noopener noreferrer">
             <span>02</span>
-            <div><strong>Instagram</strong><small>Projetos, resultados e bastidores.</small></div>
+            <div><strong>Instagram</strong><small>Projetos, resultados e novidades públicas.</small></div>
             <b>↗</b>
           </a>
-          <a class="panel join-option" href={`${base}/processos-seletivos/`}>
+          <div class="panel join-option join-option--status">
             <span>03</span>
-            <div><strong>Processos seletivos</strong><small>Editais, inscrições e novidades da LASI.</small></div>
-            <b>→</b>
-          </a>
+            <div><strong>Processos seletivos</strong><small>{selectionProcess.status}. A próxima chamada será divulgada nos canais oficiais.</small></div>
+            <b>•</b>
+          </div>
         </div>
+
+        {featuredEvent && (
+          <a class="featured-event-card" href={`${base}/eventos/${featuredEvent.id}/`}>
+            <span>Próximo destaque</span>
+            <strong>{featuredEvent.data.shortTitle}</strong>
+            <small>{featuredEvent.data.date} · {featuredEvent.data.time}</small>
+            <b>Ver evento →</b>
+          </a>
+        )}
       </div>
 
       <div class="join-visual panel" data-reveal="right">
@@ -71,7 +82,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     transition: transform 180ms ease, border-color 180ms ease;
   }
 
-  .join-option:hover {
+  a.join-option:hover {
     border-color: rgba(177,107,209,0.5);
     transform: translateX(6px);
   }
@@ -88,10 +99,63 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .join-option small {
     color: var(--muted);
+    line-height: 1.4;
   }
 
   .join-option b {
     color: var(--violet-400);
+  }
+
+  .join-option--status {
+    opacity: 0.8;
+  }
+
+  .featured-event-card {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 1.25rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(0,176,111,0.45);
+    color: white;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(0,176,111,0.18), transparent 11rem),
+      radial-gradient(circle at 0% 100%, rgba(255,95,0,0.17), transparent 13rem),
+      #080808;
+    box-shadow: 10px 10px 0 rgba(255,95,0,0.13);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .featured-event-card:hover,
+  .featured-event-card:focus-visible {
+    transform: translate(-3px, -3px);
+    box-shadow: 13px 13px 0 rgba(255,95,0,0.18);
+  }
+
+  .featured-event-card > span {
+    color: #00b06f;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .featured-event-card strong {
+    font-family: var(--display);
+    font-size: clamp(1.7rem, 4vw, 2.6rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .featured-event-card small {
+    color: #cfcfcf;
+  }
+
+  .featured-event-card b {
+    margin-top: 0.35rem;
+    color: #ff6a0a;
+    font-size: 0.74rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
   }
 
   .join-visual {
@@ -138,6 +202,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   @media (max-width: 540px) {
     .join-visual {
       min-height: 24rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featured-event-card,
+    .join-option {
+      transition: none;
     }
   }
 </style>

@@ -1,10 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { selectionProcess, site } from '../data/site';
+import { site } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const featuredEvent = (await getCollection('events')).find((event) => event.data.featured);
 const linkItems = [
   { label: 'Entrar no grupo de avisos', href: `${base}/whatsapp/`, icon: '↗', primary: true },
-  { label: 'Processos seletivos', href: `${base}/processos-seletivos/`, icon: '→', highlight: selectionProcess.isOpen },
   { label: 'Instagram', href: `${base}/instagram/`, icon: '↗', external: true },
   { label: 'LinkedIn', href: `${base}/linkedin/`, icon: '↗', external: true },
   { label: 'YouTube', href: `${base}/youtube/`, icon: '↗', external: true },
@@ -26,19 +27,28 @@ const linkItems = [
         <span>{site.tagline}</span>
       </header>
 
+      {featuredEvent && (
+        <section class="featured-link" data-reveal>
+          <a class="local-link-card" href={featuredEvent.data.externalUrl ?? `${base}/eventos/${featuredEvent.id}/`} target={featuredEvent.data.externalUrl ? '_blank' : undefined} rel={featuredEvent.data.externalUrl ? 'noopener noreferrer' : undefined}>
+            <span class="local-link-kicker">Evento em destaque · 21 SET</span>
+            <strong><span>.LOCAL</span>26</strong>
+            <small>RIO BRANCO · UFAC · 18:30</small>
+            <b>{featuredEvent.data.ctaLabel ?? 'Ver evento'} ↗</b>
+          </a>
+          <a class="local-detail-link" href={`${base}/eventos/${featuredEvent.id}/`}>Ver detalhes do evento →</a>
+        </section>
+      )}
+
       <nav class="links-list" aria-label="Links principais">
         {linkItems.map((item) => (
           <a
-            class:list={['link-card panel', { 'link-card--primary': item.primary, 'link-card--highlight': item.highlight }]}
+            class:list={['link-card panel', { 'link-card--primary': item.primary }]}
             href={item.href}
             target={item.external ? '_blank' : undefined}
             rel={item.external ? 'noopener noreferrer' : undefined}
             data-reveal
           >
-            <span class="link-label">
-              {item.label}
-              {item.highlight && <small>{selectionProcess.status}</small>}
-            </span>
+            <span>{item.label}</span>
             <b>{item.icon}</b>
           </a>
         ))}
@@ -105,6 +115,89 @@ const linkItems = [
     color: var(--muted);
   }
 
+  .featured-link {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 2.4rem;
+  }
+
+  .local-link-card {
+    position: relative;
+    display: grid;
+    min-height: 13rem;
+    align-content: end;
+    gap: 0.45rem;
+    padding: 1.25rem;
+    overflow: hidden;
+    border: 1px solid rgba(0,176,111,0.55);
+    color: #fff;
+    background:
+      radial-gradient(circle at 90% 15%, rgba(0,176,111,0.22), transparent 9rem),
+      radial-gradient(circle at 0% 100%, rgba(255,95,0,0.2), transparent 12rem),
+      #080808;
+    box-shadow: 12px 12px 0 rgba(255,95,0,0.18);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .local-link-card::before {
+    position: absolute;
+    top: -3rem;
+    right: -3rem;
+    width: 10rem;
+    height: 10rem;
+    border: 2px solid rgba(0,176,111,0.22);
+    content: '';
+    transform: rotate(26deg);
+  }
+
+  .local-link-card:hover,
+  .local-link-card:focus-visible {
+    transform: translate(-3px, -3px);
+    box-shadow: 15px 15px 0 rgba(255,95,0,0.24);
+  }
+
+  .local-link-kicker {
+    color: #00b06f;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .local-link-card strong {
+    font-family: var(--display);
+    font-size: clamp(3rem, 11vw, 5rem);
+    line-height: 0.82;
+    letter-spacing: -0.07em;
+  }
+
+  .local-link-card strong span {
+    color: #00b06f;
+  }
+
+  .local-link-card small {
+    color: #d0d0d0;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .local-link-card b {
+    margin-top: 0.5rem;
+    color: #ff6a0a;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .local-detail-link {
+    justify-self: end;
+    color: #00b06f;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
   .links-list {
     display: grid;
     gap: 0.75rem;
@@ -132,43 +225,12 @@ const linkItems = [
     background: linear-gradient(135deg, rgba(148,81,184,0.55), rgba(8,93,163,0.45));
   }
 
-  .link-card--highlight {
-    border-color: var(--violet-400);
-    background: linear-gradient(135deg, rgba(148,81,184,0.3), rgba(8,93,163,0.18));
-    animation: selection-pulse 2.4s ease-in-out infinite;
-  }
-
-  .link-label {
-    display: grid;
-    gap: 0.18rem;
-  }
-
-  .link-label small {
-    color: var(--violet-400);
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
   .link-card b {
     color: var(--violet-400);
   }
 
   .link-card--primary b {
     color: var(--white);
-  }
-
-  @keyframes selection-pulse {
-    50% {
-      box-shadow: 0 0 0 4px rgba(177,107,209,0.14), 0 18px 48px rgba(148,81,184,0.34);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .link-card--highlight {
-      animation: none;
-    }
   }
 
   .qr-panel {
@@ -213,5 +275,12 @@ const linkItems = [
   .links-footer a {
     color: var(--violet-400);
     font-weight: 800;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .local-link-card,
+    .link-card {
+      transition: none;
+    }
   }
 </style>

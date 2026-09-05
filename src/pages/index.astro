@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import FeaturedEvent from '../components/FeaturedEvent.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import AreasNetwork from '../components/AreasNetwork.astro';
 import ProjectShowcase from '../components/ProjectShowcase.astro';
@@ -15,27 +16,31 @@ const projects = (await getCollection('projects'))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
 const events = (await getCollection('events')).sort((a, b) => a.data.order - b.data.order);
+const featuredEvent = events.find((event) => event.data.featured);
 ---
 
 <BaseLayout>
   <Hero />
+
+  {featuredEvent && <FeaturedEvent event={featuredEvent} />}
 
   <section class="section manifesto">
     <div class="container grid-2">
       <div data-reveal="left">
         <p class="eyebrow">Manifesto</p>
         <h2 class="display display--medium">
-          Não somos apenas uma <span class="kicker">liga acadêmica.</span>
+          Ensino, pesquisa e <span class="kicker">extensão em movimento.</span>
         </h2>
       </div>
       <div data-reveal="right">
         <p class="lead">
-          Somos um espaço de formação, colaboração e desenvolvimento tecnológico. Conectamos estudantes interessados em construir soluções, participar de projetos e transformar conhecimento em impacto.
+          A LASI articula formação acadêmica, investigação científica e ações extensionistas para aprofundar conhecimentos em Sistemas de Informação e aproximar a tecnologia das demandas da sociedade acreana.
         </p>
         <div class="manifesto-words">
-          <span>Formação</span>
+          <span>Ensino</span>
+          <span>Pesquisa</span>
+          <span>Extensão</span>
           <span>Colaboração</span>
-          <span>Impacto</span>
         </div>
       </div>
     </div>
@@ -43,7 +48,7 @@ const events = (await getCollection('events')).sort((a, b) => a.data.order - b.d
 
   <section class="section areas-section">
     <div class="container">
-      <SectionHeading eyebrow="Trilhas de formação" title="Três áreas. Um núcleo." outline="Áreas de estudo" />
+      <SectionHeading eyebrow="Eixos temáticos" title="Três áreas. Um núcleo." outline="Áreas de estudo" />
       <AreasNetwork />
     </div>
   </section>
@@ -57,7 +62,7 @@ const events = (await getCollection('events')).sort((a, b) => a.data.order - b.d
 
   <section class="section">
     <div class="container">
-      <SectionHeading eyebrow="Agenda e comunidade" title="Aprenda. Construa. Compita." outline="Movimento" />
+      <SectionHeading eyebrow="Agenda e comunidade" title="Aprenda. Construa. Compartilhe." outline="Movimento" />
       <EventsTimeline events={events} />
     </div>
   </section>

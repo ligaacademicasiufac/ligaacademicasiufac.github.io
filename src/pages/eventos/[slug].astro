@@ -13,106 +13,181 @@ export async function getStaticPaths() {
 const { event } = Astro.props;
 const { Content } = await render(event);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const statusLabel = event.data.status === 'concluido' ? 'Concluído' : event.data.status === 'aberto' ? 'Aberto' : 'Planejado';
+const statusLabel = event.data.status === 'concluido' ? 'Concluído' : event.data.status === 'aberto' ? 'Inscrições abertas' : 'Planejado';
+const isLocal = event.data.theme === 'linuxtips-local';
+
+const facts: Array<{ label: string; value: string }> = [];
+if (event.data.prizeTotal) facts.push({ label: 'Premiação', value: event.data.prizeTotal });
+if (event.data.time) facts.push({ label: 'Horário', value: event.data.time });
+if (event.data.location) facts.push({ label: 'Local', value: event.data.location });
+if (event.data.organizer) facts.push({ label: 'Realização', value: event.data.organizer });
+if (event.data.areas.length) facts.push({ label: 'Área estratégica', value: event.data.areas.join(' · ') });
+if (event.data.jury.length) facts.push({ label: 'Comissão avaliadora', value: `${event.data.jury.length} jurados` });
 ---
 
 <BaseLayout title={event.data.title} description={event.data.summary} image={event.data.cover}>
-  <article>
+  <article class:list={{ 'event-local': isLocal }}>
     <header class="event-hero section">
       <div class="container event-hero-grid">
         <div class="event-copy">
           <p class="eyebrow">{event.data.eyebrow} · {event.data.date}</p>
+          {isLocal && <p class="local-city">RIO BRANCO_</p>}
           <h1 class="display">{event.data.title}</h1>
           <p class="lead">{event.data.summary}</p>
           <div class="tag-list" aria-label="Informações do evento">
             <span class="tag">{event.data.type}</span>
             <span class="tag">{statusLabel}</span>
+            {event.data.topics.map((topic) => <span class="tag">{topic}</span>)}
             {event.data.areas.map((area) => <span class="tag">{area}</span>)}
           </div>
           {event.data.externalUrl && (
-            <a class="button" href={event.data.externalUrl} target="_blank" rel="noreferrer">Ver competição <span>↗</span></a>
+            <a class:list={['button', { 'button--local': isLocal }]} href={event.data.externalUrl} target="_blank" rel="noreferrer">
+              {event.data.ctaLabel ?? (event.data.type === 'Hackathon' ? 'Ver competição' : 'Acessar página oficial')} <span>↗</span>
+            </a>
           )}
         </div>
-        <div class="event-cover panel">
-          <img src={`${base}${event.data.cover}`} alt={`Capa do evento ${event.data.title}`} />
+        <div class:list={['event-cover panel', { 'event-cover--local': isLocal && !event.data.cover }]}>
+          {event.data.cover ? (
+            <img src={`${base}${event.data.cover}`} alt={`Capa do evento ${event.data.title}`} />
+          ) : isLocal ? (
+            <div class="local-cover-mark" aria-hidden="true">
+              <small>21 · SET · 2026</small>
+              <strong><span>.LOCAL</span>26</strong>
+              <em>UFAC · RIO BRANCO</em>
+              <div class="local-terminal">
+                <span>&gt; linux</span>
+                <span>&gt; containers</span>
+                <span>&gt; kubernetes</span>
+                <span>&gt; community_</span>
+              </div>
+            </div>
+          ) : (
+            <div class="fallback-cover" aria-hidden="true">LASI</div>
+          )}
         </div>
       </div>
     </header>
 
-    <section class="section section--compact">
-      <div class="container event-facts">
-        {event.data.prizeTotal && <article class="panel event-fact"><span>Premiação</span><strong>{event.data.prizeTotal}</strong></article>}
-        <article class="panel event-fact"><span>Área estratégica</span><strong>{event.data.areas.join(' · ')}</strong></article>
-        <article class="panel event-fact"><span>Comissão avaliadora</span><strong>{event.data.jury.length} jurados</strong></article>
-      </div>
-    </section>
+    {facts.length > 0 && (
+      <section class="section section--compact">
+        <div class="container event-facts">
+          {facts.map((fact) => (
+            <article class="panel event-fact">
+              <span>{fact.label}</span>
+              <strong>{fact.value}</strong>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
 
     <section class="section section--compact">
-      <div class="container detail-grid">
+      <div class:list={['container', { 'detail-grid': event.data.criteria.length > 0 }] }>
         <div class="prose"><Content /></div>
-        <aside class="panel criteria-panel">
-          <p class="eyebrow">Avaliação</p>
-          <h2>Critérios do evento</h2>
-          <ul>
-            {event.data.criteria.map((criterion) => <li>{criterion}</li>)}
-          </ul>
-        </aside>
+        {event.data.criteria.length > 0 && (
+          <aside class="panel criteria-panel">
+            <p class="eyebrow">Avaliação</p>
+            <h2>Critérios do evento</h2>
+            <ul>
+              {event.data.criteria.map((criterion) => <li>{criterion}</li>)}
+            </ul>
+          </aside>
+        )}
       </div>
     </section>
 
-    <section class="section section--compact">
-      <div class="container">
-        <p class="eyebrow">Comissão avaliadora</p>
-        <h2 class="display display--medium">Quem avaliou as ideias.</h2>
-        <div class="jury-grid">
-          {event.data.jury.map((juror, index) => (
-            <article class="panel jury-card" data-reveal>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <h3>{juror.name}</h3>
+    {(event.data.supporters.length > 0 || event.data.sponsors.length > 0) && (
+      <section class="section section--compact partners-section">
+        <div class="container partners-grid">
+          {event.data.organizer && (
+            <article class="panel partner-card">
+              <span>Realização</span>
+              <strong>{event.data.organizer}</strong>
             </article>
-          ))}
+          )}
+          {event.data.sponsors.length > 0 && (
+            <article class="panel partner-card">
+              <span>Patrocínio</span>
+              <strong>{event.data.sponsors.join(' · ')}</strong>
+            </article>
+          )}
+          {event.data.supporters.length > 0 && (
+            <article class="panel partner-card">
+              <span>Apoio</span>
+              <strong>{event.data.supporters.join(' · ')}</strong>
+            </article>
+          )}
         </div>
-      </div>
-    </section>
+      </section>
+    )}
 
-    <section class="section">
-      <div class="container">
-        <p class="eyebrow">Resultados</p>
-        <h2 class="display display--medium">Ideias reconhecidas no evento.</h2>
-        <div class="results-grid">
-          {event.data.results.map((result, index) => (
-            <article class="panel result-card" data-reveal>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <p>{result.position}</p>
-              <h3>{result.project}</h3>
-              <dl>
-                <div><dt>Equipe</dt><dd>{result.team}</dd></div>
-                <div><dt>Trilha</dt><dd>{result.track}</dd></div>
-                <div><dt>Premiação</dt><dd>{result.prize}</dd></div>
-              </dl>
-            </article>
-          ))}
+    {event.data.jury.length > 0 && (
+      <section class="section section--compact">
+        <div class="container">
+          <p class="eyebrow">Comissão avaliadora</p>
+          <h2 class="display display--medium">Quem avaliou as ideias.</h2>
+          <div class="jury-grid">
+            {event.data.jury.map((juror, index) => (
+              <article class="panel jury-card" data-reveal>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{juror.name}</h3>
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )}
+
+    {event.data.results.length > 0 && (
+      <section class="section">
+        <div class="container">
+          <p class="eyebrow">Resultados</p>
+          <h2 class="display display--medium">Ideias reconhecidas no evento.</h2>
+          <div class="results-grid">
+            {event.data.results.map((result, index) => (
+              <article class="panel result-card" data-reveal>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <p>{result.position}</p>
+                <h3>{result.project}</h3>
+                <dl>
+                  <div><dt>Equipe</dt><dd>{result.team}</dd></div>
+                  <div><dt>Trilha</dt><dd>{result.track}</dd></div>
+                  <div><dt>Premiação</dt><dd>{result.prize}</dd></div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
   </article>
 </BaseLayout>
 
 <style>
   .event-hero { padding-top: 10rem; }
+  .event-copy .display { font-size: clamp(2.1rem, 4.2vw, 3.9rem); max-width: 16ch; }
   .event-hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; }
   .event-copy .lead { max-width: 54ch; }
   .event-copy .button { margin-top: 1.8rem; }
   .event-cover { min-height: 36rem; display: grid; place-items: center; overflow: hidden; padding: 1rem; background: radial-gradient(circle, rgba(69,214,255,0.14), transparent 62%), rgba(255,255,255,0.025); }
   .event-cover img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 20px 38px rgba(0,0,0,0.25)); }
-  .event-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .fallback-cover { color: rgba(255,255,255,0.18); font-family: var(--display); font-size: clamp(4rem, 10vw, 8rem); }
+
+  .event-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem; }
   .event-fact { min-height: 11rem; display: grid; align-content: end; gap: 0.7rem; padding: 1.5rem; }
   .event-fact span { color: var(--muted); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
-  .event-fact strong { font-family: var(--display); font-size: clamp(1.55rem, 3vw, 2.5rem); line-height: 0.96; text-transform: uppercase; }
+  .event-fact strong { font-family: var(--display); font-size: clamp(1.25rem, 2.5vw, 2.15rem); line-height: 1; text-transform: uppercase; overflow-wrap: anywhere; }
+
   .detail-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 2rem; align-items: start; }
   .criteria-panel { padding: 1.6rem; }
   .criteria-panel h2 { margin: 0; font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 0.95; text-transform: uppercase; }
   .criteria-panel ul { display: grid; gap: 0.9rem; margin: 1.5rem 0 0; padding-left: 1.2rem; color: var(--muted); line-height: 1.55; }
+
+  .partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; }
+  .partner-card { min-height: 11rem; display: grid; align-content: end; gap: 0.65rem; padding: 1.5rem; }
+  .partner-card span { color: var(--muted); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+  .partner-card strong { font-family: var(--display); font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 0.95; text-transform: uppercase; }
+
   .jury-grid, .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
   .jury-card, .result-card { min-height: 17rem; display: flex; flex-direction: column; padding: 1.5rem; }
   .jury-card span, .result-card > span { color: var(--violet-400); font-family: var(--display); font-size: 2rem; }
@@ -123,6 +198,110 @@ const statusLabel = event.data.status === 'concluido' ? 'Concluído' : event.dat
   .result-card dl div { display: grid; grid-template-columns: 5.25rem 1fr; gap: 0.6rem; }
   .result-card dt { color: var(--muted); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
   .result-card dd { margin: 0; color: #d8e0ef; font-size: 0.82rem; }
-  @media (max-width: 900px) { .event-hero-grid, .detail-grid { grid-template-columns: 1fr; } .event-cover { min-height: 30rem; max-width: 34rem; } .jury-grid, .results-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 600px) { .event-facts, .jury-grid, .results-grid { grid-template-columns: 1fr; } .event-cover { min-height: 25rem; } }
+
+  .event-local .event-hero {
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 80% 28%, rgba(0,176,111,0.14), transparent 22rem),
+      radial-gradient(circle at 14% 78%, rgba(255,95,0,0.15), transparent 24rem),
+      linear-gradient(180deg, rgba(0,0,0,0.72), transparent);
+  }
+
+  .event-local .eyebrow,
+  .event-local .local-city {
+    color: #00b06f;
+  }
+
+  .local-city {
+    margin: 0 0 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+  }
+
+  .event-local .button--local {
+    --button-accent: #00b06f;
+    border-radius: 0;
+    color: #050505;
+    background: #00b06f;
+    box-shadow: 10px 10px 0 #ff5f00;
+  }
+
+  .event-cover--local {
+    border-radius: 0;
+    border-color: rgba(0,176,111,0.28);
+    background: #070707;
+    box-shadow: 22px 22px 0 rgba(255,95,0,0.12);
+    transform: rotate(1.5deg);
+  }
+
+  .local-cover-mark {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 32rem;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    overflow: hidden;
+    color: white;
+    background:
+      linear-gradient(140deg, rgba(255,95,0,0.18), transparent 42%),
+      linear-gradient(315deg, rgba(0,176,111,0.16), transparent 46%),
+      #080808;
+  }
+
+  .local-cover-mark::before {
+    position: absolute;
+    top: -4rem;
+    right: -4rem;
+    width: 15rem;
+    height: 15rem;
+    border: 2px solid rgba(0,176,111,0.22);
+    content: '';
+    transform: rotate(24deg);
+  }
+
+  .local-cover-mark small,
+  .local-cover-mark em {
+    position: relative;
+    z-index: 1;
+    font-style: normal;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .local-cover-mark small { color: #ff5f00; }
+  .local-cover-mark strong { position: relative; z-index: 1; margin: 1rem 0; font-family: var(--display); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 0.9; letter-spacing: -0.05em; overflow-wrap: anywhere; }
+  .local-cover-mark strong span { color: #00b06f; }
+  .local-cover-mark em { color: #fff; }
+
+  .local-terminal {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    display: grid;
+    gap: 0.4rem;
+    color: rgba(255,255,255,0.4);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    text-align: right;
+  }
+
+  .event-local .partner-card:last-child {
+    border-color: rgba(0,176,111,0.34);
+  }
+
+  @media (max-width: 900px) {
+    .event-hero-grid, .detail-grid { grid-template-columns: 1fr; }
+    .event-cover { min-height: 30rem; max-width: 34rem; }
+    .jury-grid, .results-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .jury-grid, .results-grid { grid-template-columns: 1fr; }
+    .event-cover { min-height: 25rem; }
+    .local-cover-mark { min-height: 24rem; }
+  }
 </style>

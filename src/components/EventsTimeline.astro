@@ -7,7 +7,9 @@ interface Event {
     type: string;
     status: string;
     summary: string;
-    cover: string;
+    cover?: string;
+    theme?: 'lasi' | 'linuxtips-local';
+    featured?: boolean;
   };
 }
 
@@ -21,7 +23,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <div class="timeline">
   {events.map((event, index) => (
-    <article class="timeline-item" data-reveal>
+    <article class:list={['timeline-item', { 'timeline-item--local': event.data.theme === 'linuxtips-local' }]} data-reveal>
       <div class="timeline-marker">
         <span>{String(index + 1).padStart(2, '0')}</span>
       </div>
@@ -30,13 +32,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <div class="timeline-meta">
             <span>{event.data.date}</span>
             <span>{event.data.type}</span>
-            <span>{event.data.status === 'concluido' ? 'Concluído' : event.data.status === 'aberto' ? 'Aberto' : 'Planejado'}</span>
+            <span>{event.data.status === 'concluido' ? 'Concluído' : event.data.status === 'aberto' ? 'Inscrições abertas' : 'Planejado'}</span>
           </div>
           <h3>{event.data.shortTitle}</h3>
           <p>{event.data.summary}</p>
           <b>Ver evento <span>↗</span></b>
         </div>
-        <div class="timeline-cover"><img src={`${base}${event.data.cover}`} alt="" loading="lazy" /></div>
+        <div class="timeline-cover">
+          {event.data.cover ? (
+            <img src={`${base}${event.data.cover}`} alt="" loading="lazy" />
+          ) : event.data.theme === 'linuxtips-local' ? (
+            <div class="local-cover" aria-hidden="true">
+              <small>RIO BRANCO_</small>
+              <strong><span>.LOCAL</span>26</strong>
+              <em>21/09</em>
+            </div>
+          ) : (
+            <div class="fallback-cover" aria-hidden="true">LASI</div>
+          )}
+        </div>
       </a>
     </article>
   ))}
@@ -99,6 +113,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     transform: translateX(4px);
   }
 
+  .timeline-item--local .timeline-marker {
+    border-color: rgba(0,176,111,0.65);
+    box-shadow: 0 0 28px rgba(0,176,111,0.18);
+  }
+
+  .timeline-item--local .timeline-marker span,
+  .timeline-item--local .timeline-meta,
+  .timeline-item--local .timeline-card b {
+    color: #00b06f;
+  }
+
+  .timeline-item--local .timeline-card:hover {
+    border-color: rgba(0,176,111,0.58);
+  }
+
   .timeline-meta {
     display: flex;
     flex-wrap: wrap;
@@ -154,12 +183,80 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     object-fit: contain;
   }
 
+  .local-cover,
+  .fallback-cover {
+    width: 100%;
+    height: 100%;
+    min-height: 11rem;
+  }
+
+  .local-cover {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    overflow: hidden;
+    color: #fff;
+    background:
+      linear-gradient(145deg, rgba(255,95,0,0.2), transparent 46%),
+      linear-gradient(320deg, rgba(0,176,111,0.22), transparent 48%),
+      #080808;
+  }
+
+  .local-cover::after {
+    position: absolute;
+    top: -2rem;
+    right: -2rem;
+    width: 7rem;
+    height: 7rem;
+    border: 2px solid rgba(0,176,111,0.25);
+    content: '';
+    transform: rotate(28deg);
+  }
+
+  .local-cover small {
+    color: #00b06f;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+  }
+
+  .local-cover strong {
+    font-family: var(--display);
+    font-size: 1.7rem;
+    line-height: 0.9;
+  }
+
+  .local-cover strong span {
+    color: #00b06f;
+  }
+
+  .local-cover em {
+    color: #ff5f00;
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .fallback-cover {
+    display: grid;
+    place-items: center;
+    color: rgba(255,255,255,0.18);
+    font-family: var(--display);
+    font-size: 2.8rem;
+  }
+
   @media (max-width: 820px) {
     .timeline-card {
       grid-template-columns: 1fr;
     }
 
     .timeline-cover {
+      min-height: 16rem;
+    }
+
+    .local-cover,
+    .fallback-cover {
       min-height: 16rem;
     }
   }
@@ -183,7 +280,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: 0.62rem;
     }
 
-    .timeline-cover {
+    .timeline-cover,
+    .local-cover,
+    .fallback-cover {
       min-height: 12rem;
     }
   }

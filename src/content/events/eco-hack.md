@@ -6,7 +6,7 @@ summary: "Um hackathon de inteligência artificial que reuniu ideias, equipes e 
 date: "22 de julho de 2026"
 status: "concluido"
 type: "Hackathon"
-order: 1
+order: 2
 cover: "/events/eco-hack.png"
 areas:
   - "Inteligência Artificial e Dados"

@@ -2,7 +2,7 @@ export const site = {
   name: 'LASI',
   fullName: 'Liga Acadêmica de Sistemas de Informação',
   description:
-    'Ensino, pesquisa, extensão e inovação em Sistemas de Informação na Universidade Federal do Acre.',
+    'Liga Acadêmica de Sistemas de Informação da UFAC dedicada ao ensino, à pesquisa e à extensão em tecnologia, aproximando formação acadêmica e demandas da sociedade acreana.',
   tagline: 'Conecte-se. Colabore. Transforme.',
   social: {
     instagram: 'https://www.instagram.com/lasi.ufac/',
@@ -20,10 +20,10 @@ export const areas = [
     title: 'Inteligência Artificial e Dados',
     shortTitle: 'IA e Dados',
     description:
-      'Modelos inteligentes, análise de dados, aprendizado de máquina e soluções orientadas por informação.',
+      'Aprendizado profundo, visão computacional, processamento de linguagem natural e modelagem analítica preditiva.',
     longDescription:
-      'A trilha reúne estudos e projetos em inteligência artificial, ciência de dados, aprendizado de máquina, visão computacional, processamento de linguagem e engenharia de dados. O foco é transformar dados em soluções úteis, responsáveis e aplicáveis a contextos reais.',
-    topics: ['Aprendizado de máquina', 'Ciência de dados', 'Visão computacional', 'IA generativa'],
+      'Eixo dedicado ao estudo e à aplicação prática de arquiteturas de aprendizado profundo, visão computacional, processamento de linguagem natural e modelagem analítica preditiva, conectando investigação acadêmica e soluções aplicáveis a contextos reais.',
+    topics: ['Aprendizado profundo', 'Visão computacional', 'PLN', 'Modelagem preditiva'],
     accent: 'violet'
   },
   {
@@ -33,10 +33,10 @@ export const areas = [
     title: 'Engenharia de Software',
     shortTitle: 'Engenharia de Software',
     description:
-      'Arquitetura, desenvolvimento, qualidade, processos e construção de produtos digitais.',
+      'Metodologias ágeis, desenvolvimento colaborativo, arquitetura de sistemas e garantia de qualidade.',
     longDescription:
-      'A trilha aborda todo o ciclo de vida de software: levantamento de requisitos, arquitetura, implementação, testes, integração contínua, experiência do usuário, manutenção e evolução de sistemas.',
-    topics: ['Backend', 'Frontend', 'Arquitetura', 'Qualidade e testes'],
+      'Eixo dedicado a metodologias ágeis de desenvolvimento, gerenciamento colaborativo de repositórios, arquitetura de sistemas e garantia de qualidade para a criação e evolução de plataformas integradas e de alto desempenho.',
+    topics: ['Metodologias ágeis', 'Git e colaboração', 'Arquitetura', 'Qualidade de software'],
     accent: 'blue'
   },
   {
@@ -46,10 +46,10 @@ export const areas = [
     title: 'Infraestrutura e Redes',
     shortTitle: 'Infraestrutura e Redes',
     description:
-      'Redes, sistemas, computação em nuvem, segurança e infraestrutura tecnológica.',
+      'Redes de computadores, computação em nuvem, segurança da informação, auditoria e implantação contínua.',
     longDescription:
-      'A trilha concentra conhecimentos em redes de computadores, sistemas operacionais, computação em nuvem, observabilidade, segurança da informação, automação e infraestrutura como código.',
-    topics: ['Redes', 'Cloud e DevOps', 'Segurança', 'Sistemas operacionais'],
+      'Eixo dedicado ao estudo de redes de computadores, arquitetura de computação em nuvem, práticas de segurança da informação, auditoria de sistemas e suporte estrutural a processos de implantação contínua.',
+    topics: ['Redes', 'Cloud', 'Segurança da informação', 'Implantação contínua'],
     accent: 'cyan'
   }
 ] as const;
@@ -91,13 +91,11 @@ export const achievements = [
 ] as const;
 
 export const selectionProcess = {
-  isOpen: true,
-  status: 'Inscrições abertas',
-  period: '27 de julho a 10 de agosto de 2026, às 23h59',
-  registrationUrl: 'https://forms.gle/vRFyR1DKDB1abXig9',
+  isOpen: false,
+  status: 'Sem inscrições abertas',
+  period: 'Os processos seletivos são divulgados periodicamente nos canais oficiais da LASI.',
   description:
-    'A LASI/UFAC está selecionando novos membros para aprender, colaborar e desenvolver experiências em tecnologia.',
-  statuteNotice: 'Leia atentamente o Estatuto da LASI antes de enviar sua inscrição.',
+    'No momento, não há processo seletivo aberto. Entre no grupo de avisos e acompanhe os canais oficiais para receber a próxima chamada.',
   areas: [
     { title: 'Inteligência Artificial e Dados', icon: '🧠' },
     { title: 'Engenharia de Software', icon: '⚙️' },
@@ -106,11 +104,11 @@ export const selectionProcess = {
   profiles: [
     {
       title: 'Membros efetivos',
-      description: 'Estudantes de graduação e pós-graduação da UFAC.'
+      description: 'Estudantes de graduação e pós-graduação regularmente matriculados na UFAC.'
     },
     {
       title: 'Membros colaboradores',
-      description: 'Profissionais formados, egressos e integrantes da comunidade externa.'
+      description: 'Egressos, profissionais e integrantes da comunidade externa que contribuam técnica ou cientificamente com a Liga.'
     }
   ]
 } as const;

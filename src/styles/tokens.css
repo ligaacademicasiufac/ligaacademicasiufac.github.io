@@ -4,8 +4,11 @@
   --ink-900: #06142f;
   --ink-850: #0a1d3d;
   --ink-800: #10274a;
-  --blue-600: #0669b2;
-  --blue-500: #0a7ed0;
+  --brand-blue: #1155cc;
+  --brand-charcoal: #434343;
+  --brand-action: #e67c73;
+  --blue-600: #0e49ae;
+  --blue-500: #1155cc;
   --cyan-400: #45d6ff;
   --violet-600: #75409c;
   --violet-500: #9451b8;
@@ -20,6 +23,6 @@
   --radius-md: 1.25rem;
   --radius-lg: 2rem;
   --container: min(1180px, calc(100% - 2rem));
-  --display: 'Archivo Black', Impact, sans-serif;
-  --body: 'Space Grotesk', system-ui, sans-serif;
+  --display: 'Montserrat', system-ui, sans-serif;
+  --body: 'Open Sans', Arial, system-ui, sans-serif;
 }

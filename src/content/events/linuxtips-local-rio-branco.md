@@ -5,7 +5,7 @@ eyebrow: "Evento em destaque"
 summary: "O LINUXtips.local chega à UFAC com uma noite de conteúdo técnico, networking e comunidade sobre Linux, DevOps, SRE, Containers, Kubernetes e tecnologias emergentes."
 date: "21 de setembro de 2026"
 time: "18:30 às 22:30"
-location: "Auditório do Bloco de Mestrados — UFAC, BR-364, Km 04, Rio Branco — AC"
+location: "Auditório do Bloco de Mestrados — UFAC"
 status: "aberto"
 type: "Comunidade e tecnologia"
 order: 0
